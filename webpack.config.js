@@ -64,10 +64,7 @@ module.exports = {
     host: '0.0.0.0',
     proxy: {
       '/api': {
-        target: 'http://192.168.64.6:30873',
-        bypass: function (req, res) {
-          console.log(req.path, req.method, req.host);
-        }
+        target: 'http://192.168.64.6:30873'
       },
     },
   },
