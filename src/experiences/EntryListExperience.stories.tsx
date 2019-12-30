@@ -1,6 +1,7 @@
 import React from 'react';
 
 import EntryListExperience from './EntryListExperience';
+import noop from '../utils/noop';
 
 export default { title: 'EntryListExperience' };
 
@@ -17,6 +18,6 @@ const entries = [
 
 export const base = () => {
   return (
-    <EntryListExperience entries={entries} />
+    <EntryListExperience entries={entries} onClickNew={noop} />
   )
 }

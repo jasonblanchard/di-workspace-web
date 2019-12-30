@@ -9,12 +9,13 @@ interface Entry {
 
 interface EntryListExperienceProps {
   entries: Entry[];
+  onClickNew: () => void;
 }
 
-export default function EntryListExperience({ entries }: EntryListExperienceProps) {
+export default function EntryListExperience({ entries, onClickNew }: EntryListExperienceProps) {
   return (
     <>
-      <button>new</button>
+      <button onClick={onClickNew}>new</button>
       <EntryList entries={entries} />
     </>
   );
