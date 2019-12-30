@@ -29,6 +29,10 @@ function EntryListItem({ entry }: EntryListItemProps) {
 }
 
 export default function EntriesList({ entries }: EntriesListProps) {
+  if (entries.length === 0) {
+    return <div>No entries yet</div>;
+  }
+
   return (
     <Ul>
       {entries.map(entry => <EntryListItem key={entry.id} entry={entry} />)}

@@ -22,3 +22,7 @@ const entries = [
 export const base = () => {
   return <EntriesList entries={entries} />
 }
+
+export const zeroState = () => {
+  return <EntriesList entries={[]} />
+}

@@ -16,8 +16,12 @@ function handleChange(field: string, value: string) {
   console.log(`${field}: ${value}`);
 }
 
-function handleSubmit(fields: string) {
-  console.log(fields);
+interface HandleSubmit {
+  text: string;
+}
+
+function handleSubmit({ text }: HandleSubmit) {
+  console.log({ text });
 }
 
 export const lifeCycleHandlers = () => {
