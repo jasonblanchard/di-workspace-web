@@ -2,7 +2,6 @@ import React from 'react';
 
 import EntryEditorExperience from './EntryEditorExperience';
 import { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
-import EntryEditorExperienceConnector from './EntryEditorExperienceConnector';
 
 export default { title: 'EntryEditorExperience' };
 
@@ -24,13 +23,3 @@ export const base = () => {
     />
   )
 }
-
-// export const connected = () => {
-//   return (
-//     <EntryEditorExperienceConnector selectedEntryId={'141'}>
-//       {({isLoadingEntry, ...rest}) => {
-//         return isLoadingEntry ? <div>loading...</div> : <EntryEditorExperience {...rest} />
-//       }}
-//     </EntryEditorExperienceConnector>
-//   );
-// }

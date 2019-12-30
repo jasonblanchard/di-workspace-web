@@ -6,13 +6,14 @@ import {
 } from "react-router-dom";
 
 import EntryEditorPage from './pages/EntryEditorPage';
+import WorkspacePage from './pages/WorkspacePage';
 
 export default function App() {
   return (
     <Router>
       <Switch>
         <Route path="/workspace" exact>
-          <div>list all the entries here</div>
+          <WorkspacePage />
         </Route>
         <Route path="/workspace/:entryId" exact>
           <EntryEditorPage />
