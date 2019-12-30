@@ -3,6 +3,7 @@
     "module": "commonjs",
     "allowJs": true,
     "esModuleInterop": true,
+    "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "target": "es6",
     "noImplicitAny": true,
