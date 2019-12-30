@@ -27,3 +27,7 @@ function handleSubmit({ text }: HandleSubmit) {
 export const lifeCycleHandlers = () => {
   return <EntryForm onChange={handleChange} onSubmit={handleSubmit} />
 }
+
+export const isDisabled = () => {
+  return <EntryForm initialValues={{ text: 'Initialized entry\n\nadf sadf' }} isDisabled />
+}

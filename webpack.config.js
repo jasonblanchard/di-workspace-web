@@ -12,7 +12,7 @@ const { ifProduction } = getIfUtils(env);
 
 module.exports = {
   entry: {
-    app: './src/index.ts',
+    app: './src/index.tsx',
   },
   mode: ifProduction('production', 'development'),
   bail: true,

@@ -11,6 +11,10 @@ const Sidebar = styled.div`
   width: 200px;
 `;
 
+const Main = styled.div`
+  width: 100%;
+`;
+
 const SideDrawerLayout: FunctionComponent = ({ children }) => {
   const childrenArray = Children.toArray(children);
 
@@ -20,9 +24,9 @@ const SideDrawerLayout: FunctionComponent = ({ children }) => {
         <Sidebar>
           {childrenArray[0]}
         </Sidebar>
-        <div>
+        <Main>
           {childrenArray[1]}
-        </div>
+        </Main>
       </Container>
     </BaseLayout>
   )

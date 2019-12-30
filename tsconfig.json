@@ -12,6 +12,7 @@
     "outDir": "build",
     "baseUrl": ".",
     "strict": true,
+    "skipLibCheck": true,
   },
   "include": [
     "src"
