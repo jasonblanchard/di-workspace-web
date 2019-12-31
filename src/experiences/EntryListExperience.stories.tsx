@@ -18,6 +18,6 @@ const entries = [
 
 export const base = () => {
   return (
-    <EntryListExperience entries={entries} onClickNew={noop} />
+    <EntryListExperience entries={entries} onClickNew={noop} onClickMore={noop} showNextButton />
   )
 }

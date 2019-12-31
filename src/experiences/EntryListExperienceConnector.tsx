@@ -5,11 +5,15 @@ import { useHistory } from "react-router-dom";
 import entryPreview from '../utils/entryPreview';
 
 const listQuery = `
-  query($first: Int) {
-    entries(first: $first) {
+  query($first: Int, $after: String) {
+    entryList: entries(first: $first, after: $after) {
       edges {
         id
         text
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
@@ -48,6 +52,8 @@ interface EntryEditorExperienceConnectorRenderProps {
   entries: EntryPreview[];
   isEntriesLoading: boolean;
   onClickNew: () => void;
+  onClickMore: () => void;
+  showNextButton: boolean;
 }
 
 
@@ -57,18 +63,23 @@ const client = new GraphQLClient(baseUrl);
 export default function EntryListExperienceConnector({ children, patches }: EntryListExperienceConnectorProps) {
   const [entries, setEntries] = useState<EntryPreview[]>([]);
   const [isEntriesLoading, setIsEntriesLoaded] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [nextCursor, setNextCursor] = useState();
   const history = useHistory();
 
   useEffect(() => {
     async function fetchEntries() {
       setIsEntriesLoaded(true);
-      const { entries } = await client.request(listQuery, {
+      const { entryList } = await client.request(listQuery, {
         first: 10
       });
-      setEntries(entries.edges.map((entry: Entry) => ({
+      const { edges, pageInfo } = entryList;
+      setEntries(edges.map((entry: Entry) => ({
         id: entry.id,
         preview: entryPreview(entry.text)
       })));
+      setHasNextPage(pageInfo.hasNextPage);setNextCursor
+      setNextCursor(pageInfo.endCursor);
       setIsEntriesLoaded(false);
     }
     fetchEntries();
@@ -82,6 +93,21 @@ export default function EntryListExperienceConnector({ children, patches }: Entr
     history.push(`/workspace/${entry.id}`)
   }
 
+  async function onClickMore() {
+    const { entryList } = await client.request(listQuery, {
+      first: 10,
+      after: nextCursor,
+    });
+    const { edges, pageInfo } = entryList;
+    const nextEntries = edges.map((entry: Entry) => ({
+      id: entry.id,
+      preview: entryPreview(entry.text)
+    }))
+    setEntries(entries => [...entries, ...nextEntries]);
+    setHasNextPage(pageInfo.hasNextPage); setNextCursor
+    setNextCursor(pageInfo.endCursor);
+  }
+
   const patchedEntries = entries.map((entry: EntryPreview) => {
     if (patches?.[entry.id]) {
       return { ...entry, preview: entryPreview(patches?.[entry.id]?.text) }
@@ -93,5 +119,7 @@ export default function EntryListExperienceConnector({ children, patches }: Entr
     entries: patchedEntries,
     isEntriesLoading,
     onClickNew,
+    onClickMore,
+    showNextButton: hasNextPage,
   });
 }
