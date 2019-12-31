@@ -5,6 +5,12 @@ import debounce from 'lodash.debounce';
 
 import { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
 
+interface EntryEditorExperienceConnectorProps {
+  children: (arg0: EntryEditorExperienceConnectorRenderProps) => React.ReactElement;
+  selectedEntryId?: string;
+  onChangeEntry?: (id: string, field: string, value: string) => void;
+}
+
 interface EntryEditorExperienceConnectorRenderProps {
   isLoadingEntry: boolean;
   entryFormInitialValues?: {
@@ -15,11 +21,6 @@ interface EntryEditorExperienceConnectorRenderProps {
   onSubmitEntryForm: (arg0: { text: string }) => void;
   onChangeEntryForm: (field: string, value: string) => void;
   onClickConfirmDeleteEntry: () => void;
-}
-
-interface EntryEditorExperienceConnectorProps {
-  children: (arg0: EntryEditorExperienceConnectorRenderProps) => React.ReactElement;
-  selectedEntryId?: string;
 }
 
 interface Entry {
@@ -61,7 +62,7 @@ function mapSaveStateToSaveStatusIndicatorVariant(isSavingEntry: boolean, didSav
   return SaveStatusIndicatorVariant.Saved;
 }
 
-export default function EntryEditorExperienceConnector({ children, selectedEntryId }: EntryEditorExperienceConnectorProps) {
+export default function EntryEditorExperienceConnector({ children, selectedEntryId, onChangeEntry }: EntryEditorExperienceConnectorProps) {
   const [entry, setEntry] = useState<Entry>();
   const [isLoadingEntry, setIsLoadingEntry] = useState(false);
   const [isSavingEntry, setIsSavingEntry] = useState(false);
@@ -111,6 +112,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
   }
 
   function handleChangeEntryForm(field: string, value: string) {
+    if (selectedEntryId && onChangeEntry) onChangeEntry(selectedEntryId, field, value);
     if (!debouncedSaveEntry) return;
     if (field === 'text') debouncedSaveEntry({ text: value });
   }

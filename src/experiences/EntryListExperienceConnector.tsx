@@ -33,20 +33,28 @@ interface Entry {
   text: string;
 }
 
+interface Patch {
+  [key: string]: {
+    text: string
+  }
+}
+
+interface EntryListExperienceConnectorProps {
+  children: (arg0: EntryEditorExperienceConnectorRenderProps) => React.ReactElement;
+  patches?: Patch;
+}
+
 interface EntryEditorExperienceConnectorRenderProps {
   entries: EntryPreview[];
   isEntriesLoading: boolean;
   onClickNew: () => void;
 }
 
-interface EntryListExperienceConnectorProps {
-  children: (arg0: EntryEditorExperienceConnectorRenderProps) => React.ReactElement;
-}
 
 const baseUrl = '/api/entry/';
 const client = new GraphQLClient(baseUrl);
 
-export default function EntryListExperienceConnector({ children }: EntryListExperienceConnectorProps) {
+export default function EntryListExperienceConnector({ children, patches }: EntryListExperienceConnectorProps) {
   const [entries, setEntries] = useState<EntryPreview[]>([]);
   const [isEntriesLoading, setIsEntriesLoaded] = useState(false);
   const history = useHistory();
@@ -74,8 +82,15 @@ export default function EntryListExperienceConnector({ children }: EntryListExpe
     history.push(`/workspace/${entry.id}`)
   }
 
+  const patchedEntries = entries.map((entry: EntryPreview) => {
+    if (patches?.[entry.id]) {
+      return { ...entry, preview: entryPreview(patches?.[entry.id]?.text) }
+    }
+    return entry;
+  });
+
   return children({
-    entries,
+    entries: patchedEntries,
     isEntriesLoading,
     onClickNew,
   });
