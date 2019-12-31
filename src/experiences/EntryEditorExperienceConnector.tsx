@@ -85,11 +85,12 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
     setDidSaveEntryFiled(false);
     setIsSavingEntry(true);
     try {
-      await client.request(updateQuery, {
+      const { entry } = await client.request(updateQuery, {
         id: selectedEntryId,
         text
       });
       setIsSavingEntry(false);
+      setEntry(entry);
     } catch (error) {
       console.error(error);
       setIsSavingEntry(false);
@@ -110,7 +111,6 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
   }
 
   function handleChangeEntryForm(field: string, value: string) {
-    // console.log(`Updating ${field} to ${value}`);
     if (!debouncedSaveEntry) return;
     if (field === 'text') debouncedSaveEntry({ text: value });
   }
