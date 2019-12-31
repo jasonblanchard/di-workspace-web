@@ -55,9 +55,9 @@ export default function EntryListExperienceConnector({ children }: EntryListExpe
     async function fetchEntries() {
       setIsEntriesLoaded(true);
       const { entries } = await client.request(listQuery, {
-        first: 500 // TODO: Need to fetch most recent from the server
+        first: 10
       });
-      setEntries(entries.edges.reverse().map((entry: Entry) => ({
+      setEntries(entries.edges.map((entry: Entry) => ({
         id: entry.id,
         preview: entryPreview(entry.text)
       })));
@@ -68,7 +68,7 @@ export default function EntryListExperienceConnector({ children }: EntryListExpe
 
   async function onClickNew() {
     const { entry } = await client.request(createQuery, {
-      text: 'TODO: Fix me' // TODO: Relax validation to allow empty string
+      text: '',
     });
 
     history.push(`/workspace/${entry.id}`)
