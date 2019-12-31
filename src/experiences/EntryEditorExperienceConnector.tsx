@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { GraphQLClient } from 'graphql-request';
+import { useHistory } from "react-router-dom";
 
 import { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
 
@@ -12,6 +13,7 @@ interface EntryEditorExperienceConnectorRenderProps {
   saveStatusIndicatorVariant: SaveStatusIndicatorVariant;
   onSubmitEntryForm: (arg0: { text: string }) => void;
   onChangeEntryForm: (field: string, value: string) => void;
+  onClickConfirmDeleteEntry: () => void;
 }
 
 interface EntryEditorExperienceConnectorProps {
@@ -41,6 +43,14 @@ const updateQuery = `
     }
 `;
 
+const deleteQuery = `
+  mutation deleteEntry($id: String!) {
+      deleteEntry(id: $id) {
+        result
+      }
+    }
+`;
+
 const baseUrl = '/api/entry/';
 const client = new GraphQLClient(baseUrl);
 
@@ -59,6 +69,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
   const [isLoadingEntry, setIsLoadingEntry] = useState(false);
   const [isSavingEntry, setIsSavingEntry] = useState(false);
   const [didSaveEntryFail, setDidSaveEntryFiled] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     async function fetchEntry() {
@@ -87,6 +98,11 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
     }
   }
 
+  async function deleteEntry() {
+    await client.request(deleteQuery, { id: selectedEntryId });
+    history.push(`/workspace`);
+  }
+
   const saveStatusIndicatorVariant = mapSaveStateToSaveStatusIndicatorVariant(isSavingEntry, didSaveEntryFail);
 
   return children({
@@ -97,6 +113,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
     isLoadingEntry: isLoadingEntry,
     entryFormInitialValues: {
       text: entry?.text || ''
-    }
+    },
+    onClickConfirmDeleteEntry: deleteEntry,
   });
 }

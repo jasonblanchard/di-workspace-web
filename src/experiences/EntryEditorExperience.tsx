@@ -2,6 +2,7 @@ import React from 'react';
 
 import EntryForm from '../components/EntryForm';
 import SaveStatusIndicator, { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
+import DeleteEntry from '../components/DeleteEntry';
 
 interface EntryEditorExperienceProps {
   entryFormInitialValues?: {
@@ -11,9 +12,10 @@ interface EntryEditorExperienceProps {
   saveStatusIndicatorVariant: SaveStatusIndicatorVariant;
   onSubmitEntryForm: (arg0: { text: string }) => void;
   onChangeEntryForm: (field: string, value: string) => void;
+  onClickConfirmDeleteEntry: () => void;
 }
 
-export default function EntryEditorExperience({ entryFormInitialValues, isEntryFormDisabled, saveStatusIndicatorVariant, onSubmitEntryForm, onChangeEntryForm }: EntryEditorExperienceProps) {
+export default function EntryEditorExperience({ entryFormInitialValues, isEntryFormDisabled, saveStatusIndicatorVariant, onSubmitEntryForm, onChangeEntryForm, onClickConfirmDeleteEntry }: EntryEditorExperienceProps) {
   return (
     <>
       <div>
@@ -25,6 +27,7 @@ export default function EntryEditorExperience({ entryFormInitialValues, isEntryF
         isDisabled={isEntryFormDisabled}
         onChange={onChangeEntryForm}
       />
+      <DeleteEntry onConfirmDelete={onClickConfirmDeleteEntry} />
     </>
   );
 }

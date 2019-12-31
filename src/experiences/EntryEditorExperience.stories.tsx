@@ -13,6 +13,10 @@ function handleChangeEntryForm(field: string, value: string) {
   console.log(`Updating ${field} to ${value}`);
 }
 
+function handleClickDeleteEntry() {
+  console.log('delete');
+}
+
 export const base = () => {
   return (
     <EntryEditorExperience
@@ -20,6 +24,7 @@ export const base = () => {
       saveStatusIndicatorVariant={SaveStatusIndicatorVariant.Saved}
       onSubmitEntryForm={saveEntry}
       onChangeEntryForm={handleChangeEntryForm}
+      onClickConfirmDeleteEntry={handleClickDeleteEntry}
     />
   )
 }
