@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GraphQLClient } from 'graphql-request';
 import { useHistory } from "react-router-dom";
+import debounce from 'lodash.debounce';
 
 import { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
 
@@ -54,10 +55,6 @@ const deleteQuery = `
 const baseUrl = '/api/entry/';
 const client = new GraphQLClient(baseUrl);
 
-function handleChangeEntryForm(field: string, value: string) {
-  console.log(`Updating ${field} to ${value}`);
-}
-
 function mapSaveStateToSaveStatusIndicatorVariant(isSavingEntry: boolean, didSaveEntryFail: boolean) {
   if (didSaveEntryFail) return SaveStatusIndicatorVariant.Error;
   if (isSavingEntry) return SaveStatusIndicatorVariant.Saving;
@@ -69,6 +66,8 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
   const [isLoadingEntry, setIsLoadingEntry] = useState(false);
   const [isSavingEntry, setIsSavingEntry] = useState(false);
   const [didSaveEntryFail, setDidSaveEntryFiled] = useState(false);
+  const [debouncedSaveEntry, setDebouncedSaveEntry] = useState();
+
   const history = useHistory();
 
   useEffect(() => {
@@ -98,11 +97,25 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
     }
   }
 
+  // Only create the debounced save on first render.
+  useEffect(() => {
+    const debouncedSaveEntry = debounce(saveEntry, 1000, { maxWait: 5000 });
+    // Need to use function syntax, otherwise the setter tries to immediately invoke it.
+    setDebouncedSaveEntry(() => debouncedSaveEntry);
+  }, [selectedEntryId]);
+
   async function deleteEntry() {
     await client.request(deleteQuery, { id: selectedEntryId });
     history.push(`/workspace`);
   }
 
+  function handleChangeEntryForm(field: string, value: string) {
+    // console.log(`Updating ${field} to ${value}`);
+    if (!debouncedSaveEntry) return;
+    if (field === 'text') debouncedSaveEntry({ text: value });
+  }
+
+  // TODO: Artificially slow down the transition from saving to saved to make it more noticeable.
   const saveStatusIndicatorVariant = mapSaveStateToSaveStatusIndicatorVariant(isSavingEntry, didSaveEntryFail);
 
   return children({
