@@ -16,3 +16,10 @@ tag: build
 push: tag
 	docker push ${LATEST_TAG}
 	docker push ${SHA_TAG}
+
+deploy:
+	cd ./deploy/base; kustomize edit set image ${SHA_TAG}; \
+	cd ..; \
+	kubectl apply -k ./overlays/development; \
+	cd base; \
+	kustomize edit set image ${LATEST_TAG}

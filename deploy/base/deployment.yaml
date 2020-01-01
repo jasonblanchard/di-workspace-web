@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: workspace-web
+  name: workspace-web
+  namespace: di
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workspace-web
+  template:
+    metadata:
+      labels:
+        app: workspace-web
+    spec:
+      serviceAccountName: workspace-web
+      containers:
+      - image: jasonblanchard/di-workspace-web
+        name: workspace-web
+        envFrom:
+          - configMapRef:
+              name: workspace-web-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+        ports:
+          - containerPort: 8080
+
