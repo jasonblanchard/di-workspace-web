@@ -8,7 +8,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 const outputDir = path.join(__dirname, 'build/');
 const env = process.env.NODE_ENV || 'development';
-const { ifProduction } = getIfUtils(env);
+const { ifProduction, ifDevelopment } = getIfUtils(env);
 
 module.exports = {
   entry: {
@@ -32,10 +32,10 @@ module.exports = {
     ],
   },
   plugins: removeEmpty([
-    new HtmlWebpackPlugin({
+    ifDevelopment(new HtmlWebpackPlugin({
       template: 'src/index.html',
       inject: true,
-    }),
+    })),
     ifProduction(new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [
         outputDir,
