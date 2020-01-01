@@ -5,7 +5,7 @@ const BaseLayout: FunctionComponent = ({ children }) => {
   return (
     <div>
       <header>
-        <Link to="/workspace">Di</Link>
+        <Link to="/workspace/">Di</Link>
       </header>
       {children}
     </div>
