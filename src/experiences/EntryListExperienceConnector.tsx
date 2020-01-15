@@ -3,6 +3,7 @@ import { GraphQLClient } from 'graphql-request';
 import { useHistory } from "react-router-dom";
 
 import entryPreview from '../utils/entryPreview';
+import getCsrfToken from '../utils/getCsrfToken';
 
 const listQuery = `
   query($first: Int, $after: String) {
@@ -58,7 +59,12 @@ interface EntryEditorExperienceConnectorRenderProps {
 
 
 const baseUrl = '/api/entry/';
-const client = new GraphQLClient(baseUrl);
+const csrfToken = getCsrfToken();
+const client = new GraphQLClient(baseUrl, {
+  headers: {
+    'CSRF-Token': csrfToken,
+  }
+});
 
 export default function EntryListExperienceConnector({ children, patches }: EntryListExperienceConnectorProps) {
   const [entries, setEntries] = useState<EntryPreview[]>([]);

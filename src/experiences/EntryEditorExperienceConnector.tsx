@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import debounce from 'lodash.debounce';
 
 import { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
+import getCsrfToken from '../utils/getCsrfToken';
 
 interface EntryEditorExperienceConnectorProps {
   children: (arg0: EntryEditorExperienceConnectorRenderProps) => React.ReactElement;
@@ -54,7 +55,12 @@ const deleteQuery = `
 `;
 
 const baseUrl = '/api/entry/';
-const client = new GraphQLClient(baseUrl);
+const csrfToken = getCsrfToken();
+const client = new GraphQLClient(baseUrl, {
+  headers: {
+    'CSRF-Token': csrfToken,
+  }
+});
 
 function mapSaveStateToSaveStatusIndicatorVariant(isSavingEntry: boolean, didSaveEntryFail: boolean) {
   if (didSaveEntryFail) return SaveStatusIndicatorVariant.Error;
