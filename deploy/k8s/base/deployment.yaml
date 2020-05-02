@@ -17,11 +17,11 @@ spec:
     spec:
       serviceAccountName: workspace-web
       containers:
-      - image: jasonblanchard/di-workspace-web
+      - image: jasonblanchard/di-workspace-web:latest # {"$ref":"#/definitions/io.k8s.cli.substitutions.image"}
         name: workspace-web
         envFrom:
-          - configMapRef:
-              name: workspace-web-config
+        - configMapRef:
+            name: workspace-web-config
         livenessProbe:
           httpGet:
             path: /health
@@ -31,5 +31,4 @@ spec:
             path: /health
             port: 8080
         ports:
-          - containerPort: 8080
-
+        - containerPort: 8080
