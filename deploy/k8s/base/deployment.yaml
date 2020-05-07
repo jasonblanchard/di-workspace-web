@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: workspace-web
   name: workspace-web
   namespace: di
+  labels:
+    app: workspace-web
 spec:
   replicas: 1
   selector:
@@ -17,18 +17,18 @@ spec:
     spec:
       serviceAccountName: workspace-web
       containers:
-      - image: jasonblanchard/di-workspace-web:latest # {"$ref":"#/definitions/io.k8s.cli.substitutions.image"}
-        name: workspace-web
+      - name: workspace-web
+        image: jasonblanchard/di-workspace-web:latest
+        ports:
+        - containerPort: 8080
         envFrom:
         - configMapRef:
             name: workspace-web-config
         livenessProbe:
           httpGet:
-            path: /health
             port: 8080
+            path: /health
         readinessProbe:
           httpGet:
-            path: /health
             port: 8080
-        ports:
-        - containerPort: 8080
+            path: /health
