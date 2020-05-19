@@ -25,6 +25,21 @@ export const base = () => {
       onSubmitEntryForm={saveEntry}
       onChangeEntryForm={handleChangeEntryForm}
       onClickConfirmDeleteEntry={handleClickDeleteEntry}
+      entryCreatedAt="2020-05-19T22:39:38.759Z"
+    />
+  )
+}
+
+export const withUpdatedAt = () => {
+  return (
+    <EntryEditorExperience
+      isEntryFormDisabled={false}
+      saveStatusIndicatorVariant={SaveStatusIndicatorVariant.Saved}
+      onSubmitEntryForm={saveEntry}
+      onChangeEntryForm={handleChangeEntryForm}
+      onClickConfirmDeleteEntry={handleClickDeleteEntry}
+      entryCreatedAt="2020-05-19T22:39:38.759Z"
+      entryUpdatedAt="2020-05-19T22:39:38.759Z"
     />
   )
 }

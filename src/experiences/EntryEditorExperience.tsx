@@ -12,10 +12,12 @@ interface EntryEditorExperienceProps {
   saveStatusIndicatorVariant: SaveStatusIndicatorVariant;
   onSubmitEntryForm: (arg0: { text: string }) => void;
   onChangeEntryForm: (field: string, value: string) => void;
+  entryCreatedAt: string;
+  entryUpdatedAt?: string;
   onClickConfirmDeleteEntry: () => void;
 }
 
-export default function EntryEditorExperience({ entryFormInitialValues, isEntryFormDisabled, saveStatusIndicatorVariant, onSubmitEntryForm, onChangeEntryForm, onClickConfirmDeleteEntry }: EntryEditorExperienceProps) {
+export default function EntryEditorExperience({ entryFormInitialValues, isEntryFormDisabled, saveStatusIndicatorVariant, onSubmitEntryForm, onChangeEntryForm, onClickConfirmDeleteEntry, entryCreatedAt, entryUpdatedAt }: EntryEditorExperienceProps) {
   return (
     <>
       <div>
@@ -28,6 +30,9 @@ export default function EntryEditorExperience({ entryFormInitialValues, isEntryF
         onChange={onChangeEntryForm}
       />
       <DeleteEntry onConfirmDelete={onClickConfirmDeleteEntry} />
+      <div>
+        {entryCreatedAt} {entryUpdatedAt ? `• ${entryUpdatedAt}` : null}
+      </div>
     </>
   );
 }

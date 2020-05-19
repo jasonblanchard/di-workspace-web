@@ -19,6 +19,8 @@ interface EntryEditorExperienceConnectorRenderProps {
   },
   isEntryFormDisabled: boolean;
   saveStatusIndicatorVariant: SaveStatusIndicatorVariant;
+  entryCreatedAt: string;
+  entryUpdatedAt?: string;
   onSubmitEntryForm: (arg0: { text: string }) => void;
   onChangeEntryForm: (field: string, value: string) => void;
   onClickConfirmDeleteEntry: () => void;
@@ -26,6 +28,8 @@ interface EntryEditorExperienceConnectorRenderProps {
 
 interface Entry {
   text: string;
+  createdAt: string;
+  updatedAt?: string;
 }
 
 const getQuery = `
@@ -33,6 +37,8 @@ const getQuery = `
     entry(id: $id) {
       id
       text
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -40,8 +46,10 @@ const getQuery = `
 const updateQuery = `
   mutation updateEntry($id: String!, $text: String!) {
       entry: updateEntry(id: $id, text: $text) {
-        id,
+        id
         text
+        createdAt
+        updatedAt
       }
     }
 `;
@@ -73,7 +81,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
   const [isLoadingEntry, setIsLoadingEntry] = useState(false);
   const [isSavingEntry, setIsSavingEntry] = useState(false);
   const [didSaveEntryFail, setDidSaveEntryFiled] = useState(false);
-  const [debouncedSaveEntry, setDebouncedSaveEntry] = useState();
+  const [debouncedSaveEntry, setDebouncedSaveEntry] = useState<(({ text }: { text: string; }) => Promise<void>)>();
 
   const history = useHistory();
 
@@ -135,6 +143,8 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
     entryFormInitialValues: {
       text: entry?.text || ''
     },
+    entryCreatedAt: entry?.createdAt || '',
+    entryUpdatedAt: entry?.updatedAt,
     onClickConfirmDeleteEntry: deleteEntry,
   });
 }
