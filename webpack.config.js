@@ -32,10 +32,10 @@ module.exports = {
     ],
   },
   plugins: removeEmpty([
-    ifDevelopment(new HtmlWebpackPlugin({
-      template: 'src/index.html',
-      inject: true,
-    })),
+    // ifDevelopment(new HtmlWebpackPlugin({
+    //   template: 'src/index.html',
+    //   inject: true,
+    // })),
     ifProduction(new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [
         outputDir,

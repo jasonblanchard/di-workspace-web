@@ -23,3 +23,6 @@ deploy:
 	kubectl apply -k ./overlays/development; \
 	cd base; \
 	kustomize edit set image ${LATEST_TAG}
+
+swap:
+	telepresence --swap-deployment workspace-web --namespace di --expose 8080 --docker-run -v $(shell pwd)/build:/usr/src/app/public -p 8080:8080 -e PORT=8080 -e JS_BUNDLE_PATH=app.js -e PAGE_TITLE="App Dev" jasonblanchard/di-fe-server
