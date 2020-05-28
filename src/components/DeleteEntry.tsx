@@ -9,11 +9,11 @@ export default function DeleteEntry({ onConfirmDelete }: DeleteEntryProps) {
 
   if (isDeleteSelected) {
     return (
-      <>
+      <div>
         <div>Are you sure?</div>
         <button onClick={onConfirmDelete}>yep</button>
         <button onClick={() => setIsDeleteSelected(false)}>nope</button>
-      </>
+      </div>
     )
   }
 

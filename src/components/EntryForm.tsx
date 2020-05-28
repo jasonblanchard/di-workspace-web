@@ -12,15 +12,22 @@ interface EntryFormProps {
   initialValues?: FormValues
   onChange?: (field: string, value: string) => void;
   onSubmit?: (arg0: FormValues) => void;
-  isDisabled?: boolean
+  isDisabled?: boolean;
+  actions?: React.ReactNode;
 }
 
 const Textarea = styled.textarea`
-  height: 100%;
+  height: 85vh;
   width: 100%;
 `;
 
-export default function EntryForm({ initialValues, onChange, onSubmit, isDisabled }: EntryFormProps) {
+const ActionsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export default function EntryForm({ initialValues, onChange, onSubmit, isDisabled, actions }: EntryFormProps) {
   const { form, pristine, handleSubmit } = useForm({
     onSubmit: onSubmit || noop,
     initialValues,
@@ -43,7 +50,10 @@ export default function EntryForm({ initialValues, onChange, onSubmit, isDisable
         onFocus={textField.input.onFocus}
         onChange={handleChangeTextField}
       />
-      <button type="submit" disabled={isDisabled || pristine}>save</button>
+      <ActionsContainer>
+        <button type="submit" disabled={isDisabled || pristine}>save</button>
+        {actions}
+      </ActionsContainer>
     </form>
   );
 }

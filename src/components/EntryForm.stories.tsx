@@ -31,3 +31,8 @@ export const lifeCycleHandlers = () => {
 export const isDisabled = () => {
   return <EntryForm initialValues={{ text: 'Initialized entry\n\nadf sadf' }} isDisabled />
 }
+
+export const withActions = () => {
+  const actions = <div>actions here!</div>;
+  return <EntryForm initialValues={{ text: 'Initialized entry\n\nadf sadf' }} isDisabled actions={actions} />
+}

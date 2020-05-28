@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from '@emotion/styled';
 
 import EntryForm from '../components/EntryForm';
 import SaveStatusIndicator, { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
@@ -17,22 +18,29 @@ interface EntryEditorExperienceProps {
   onClickConfirmDeleteEntry: () => void;
 }
 
+const MetadataContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export default function EntryEditorExperience({ entryFormInitialValues, isEntryFormDisabled, saveStatusIndicatorVariant, onSubmitEntryForm, onChangeEntryForm, onClickConfirmDeleteEntry, entryCreatedAt, entryUpdatedAt }: EntryEditorExperienceProps) {
   return (
     <>
-      <div>
-        <SaveStatusIndicator variant={saveStatusIndicatorVariant} />
-      </div>
+      <MetadataContainer>
+        <div>
+          <SaveStatusIndicator variant={saveStatusIndicatorVariant} />
+        </div>
+        <div>
+          {entryCreatedAt} {entryUpdatedAt ? `• ${entryUpdatedAt}` : null}
+        </div>
+      </MetadataContainer>
       <EntryForm
         initialValues={entryFormInitialValues}
         onSubmit={onSubmitEntryForm}
         isDisabled={isEntryFormDisabled}
         onChange={onChangeEntryForm}
+        actions={<DeleteEntry onConfirmDelete={onClickConfirmDeleteEntry} />}
       />
-      <DeleteEntry onConfirmDelete={onClickConfirmDeleteEntry} />
-      <div>
-        {entryCreatedAt} {entryUpdatedAt ? `• ${entryUpdatedAt}` : null}
-      </div>
     </>
   );
 }
