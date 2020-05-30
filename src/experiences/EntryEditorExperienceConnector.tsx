@@ -12,7 +12,7 @@ interface EntryEditorExperienceConnectorProps {
   onChangeEntry?: (id: string, field: string, value: string) => void;
 }
 
-interface EntryEditorExperienceConnectorRenderProps {
+export interface EntryEditorExperienceConnectorRenderProps {
   isLoadingEntry: boolean;
   entryFormInitialValues?: {
     text: string;

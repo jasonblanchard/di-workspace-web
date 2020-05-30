@@ -45,11 +45,11 @@ interface Patch {
 }
 
 interface EntryListExperienceConnectorProps {
-  children: (arg0: EntryEditorExperienceConnectorRenderProps) => React.ReactElement;
+  children: (arg0: EntryListExperienceConnectorRenderProps) => React.ReactElement;
   patches?: Patch;
 }
 
-interface EntryEditorExperienceConnectorRenderProps {
+export interface EntryListExperienceConnectorRenderProps {
   entries: EntryPreview[];
   isEntriesLoading: boolean;
   onClickNew: () => void;

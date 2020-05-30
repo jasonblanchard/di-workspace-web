@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import SideDrawerLayout from './SideDrawerLayout';
 import EntryEditorExperience from '../experiences/EntryEditorExperience';
-import EntryEditorExperienceConnector from '../experiences/EntryEditorExperienceConnector';
 import EntryListExperience from '../experiences/EntryListExperience';
-import EntryListExperienceConnector from '../experiences/EntryListExperienceConnector';
+import { EntryListExperienceConnector, EntryEditorExperienceConnector } from '../experiences/connectors';
 
 interface EntryPatch {
   [key: string]: {
@@ -13,17 +12,24 @@ interface EntryPatch {
   }
 }
 
-export default function EntryEditorPage() {
+interface EntryEditorPageProps {
+  connectors: {
+    EntryEditorExperienceConnector: EntryEditorExperienceConnector,
+    EntryListExperienceConnector: EntryListExperienceConnector;
+  }
+}
+
+export default function EntryEditorPage({ connectors }: EntryEditorPageProps) {
   const { entryId } = useParams();
   const [entryPatches, setEntryPatches] = useState<EntryPatch>();
 
-  function handleChangeEntry(id: string, field: string, value: string) {
+  function handleChangeEntry(id: string, _field: string, value: string) {
     setEntryPatches((patches) => {
       return {
         ...patches,
         ...{
           [id]: {
-            [field]: value
+            text: value
           }
         }
       }
@@ -33,18 +39,18 @@ export default function EntryEditorPage() {
   return (
     <SideDrawerLayout>
       <nav>
-        <EntryListExperienceConnector patches={entryPatches}>
+        <connectors.EntryListExperienceConnector patches={entryPatches}>
           {({ isEntriesLoading, ...rest }) => {
             return isEntriesLoading ? <div>loading...</div> : <EntryListExperience {...rest} />;
           }}
-        </EntryListExperienceConnector>
+        </connectors.EntryListExperienceConnector>
       </nav>
       <div role="main">
-        <EntryEditorExperienceConnector selectedEntryId={entryId} onChangeEntry={handleChangeEntry}>
+        <connectors.EntryEditorExperienceConnector selectedEntryId={entryId} onChangeEntry={handleChangeEntry}>
           {({ isLoadingEntry, ...rest }) => {
             return isLoadingEntry ? <div>loading...</div> : <EntryEditorExperience {...rest} />
           }}
-        </EntryEditorExperienceConnector>
+        </connectors.EntryEditorExperienceConnector>
       </div>
     </SideDrawerLayout>
   )
