@@ -1,4 +1,4 @@
-import react from 'React';
+import react from 'react';
 
 import EntryListExperienceConnector from './EntryListExperienceConnector';
 import EntryEditorExperienceConnector from '../experiences/EntryEditorExperienceConnector';
