@@ -31,7 +31,7 @@ const connectors: Connectors = {
     entries,
     isEntriesLoading: false,
     showNextButton: true,
-    onClickNew: noop,
+    onClickNew: () => console.log('new'),
     onClickMore: noop,
   })),
 }

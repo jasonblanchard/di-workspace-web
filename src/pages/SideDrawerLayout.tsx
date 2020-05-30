@@ -1,12 +1,16 @@
-import React, { Children, FunctionComponent } from 'react';
+import React, { useState, Children, FunctionComponent } from 'react';
 import styled from '@emotion/styled';
 
 import BaseLayout from './BaseLayout';
 
-const Container = styled.div`
+interface ContainerProps {
+  isExpanded: boolean;
+}
+
+const Container = styled.div<ContainerProps>`
   height: 100%;
   display: grid;
-  grid-template-columns: 15% 85%;
+  grid-template-columns: ${({ isExpanded }) => isExpanded ? '15% 85%' : '5% 95%'};
   grid-template-areas: "sidebar main";
 
 
@@ -31,16 +35,20 @@ const Main = styled.div`
 `;
 
 const SideDrawerLayout: FunctionComponent = ({ children }) => {
+  const [isExpanded, setIsExpanded] = useState(true);
   const childrenArray = Children.toArray(children);
+
+  const handleClickEspand = () => setIsExpanded(isExpanded => !isExpanded);
 
   return (
     <BaseLayout>
-      <Container>
+      <Container isExpanded={isExpanded}>
         <Sidebar>
-          {childrenArray[0]}
+          <button onClick={handleClickEspand}>{isExpanded ? "<<" : ">>"}</button>
+          {isExpanded ? childrenArray[0] : childrenArray[1]}
         </Sidebar>
         <Main>
-          {childrenArray[1]}
+          {childrenArray[2]}
         </Main>
       </Container>
     </BaseLayout>

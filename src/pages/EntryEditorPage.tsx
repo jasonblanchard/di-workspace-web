@@ -45,6 +45,13 @@ export default function EntryEditorPage({ connectors }: EntryEditorPageProps) {
           }}
         </connectors.EntryListExperienceConnector>
       </nav>
+      <nav>
+        <connectors.EntryListExperienceConnector>
+          {({ onClickNew }) => {
+            return <button onClick={onClickNew}>+</button>;
+          }}
+        </connectors.EntryListExperienceConnector>
+      </nav>
       <div role="main">
         <connectors.EntryEditorExperienceConnector selectedEntryId={entryId} onChangeEntry={handleChangeEntry}>
           {({ isLoadingEntry, ...rest }) => {
