@@ -12,6 +12,11 @@ interface Connectors {
   EntryListExperienceConnector: EntryListExperienceConnector;
 }
 
+const entries = Array.from(Array(55)).map((n, i) => ({
+  id: String(i.toString(10)),
+  preview: 'Fusce Vulputate Lorem Etiam'
+}));
+
 const connectors: Connectors = {
   EntryEditorExperienceConnector: ({ children }) => (children({
     saveStatusIndicatorVariant: SaveStatusIndicatorVariant.Saved,
@@ -21,19 +26,9 @@ const connectors: Connectors = {
     onSubmitEntryForm: noop,
     onChangeEntryForm: noop,
     onClickConfirmDeleteEntry: noop,
-
   })),
   EntryListExperienceConnector: ({ children }) => (children({
-    entries: [
-      {
-        id: '1',
-        preview: 'Consectetur Commodo Amet'
-      },
-      {
-        id: '2',
-        preview: 'Fusce Vulputate Lorem Etiam'
-      }
-    ],
+    entries,
     isEntriesLoading: false,
     showNextButton: true,
     onClickNew: noop,

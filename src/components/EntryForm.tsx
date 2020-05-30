@@ -17,7 +17,7 @@ interface EntryFormProps {
 }
 
 const Textarea = styled.textarea`
-  height: 85vh;
+  height: 80vh;
   width: 100%;
 `;
 

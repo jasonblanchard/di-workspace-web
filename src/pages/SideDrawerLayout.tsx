@@ -4,15 +4,30 @@ import styled from '@emotion/styled';
 import BaseLayout from './BaseLayout';
 
 const Container = styled.div`
-  display: flex;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  grid-template-areas: "sidebar main";
+
+
+  @media (max-width: 768px) {
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "main"
+      "sidebar";
+  }
 `;
 
 const Sidebar = styled.div`
-  width: 200px;
+  grid-area: sidebar;
+  height: 100vh;
+  overflow: scroll;
+  padding: 10px;
 `;
 
 const Main = styled.div`
-  width: 100%;
+  grid-area: main;
+  padding: 10px;
 `;
 
 const SideDrawerLayout: FunctionComponent = ({ children }) => {
