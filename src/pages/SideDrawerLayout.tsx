@@ -2,6 +2,7 @@ import React, { useState, Children, FunctionComponent } from 'react';
 import styled from '@emotion/styled';
 
 import BaseLayout from './BaseLayout';
+import useLocalStorage from '../utils/useLocalStorage'
 
 interface ContainerProps {
   isExpanded: boolean;
@@ -43,10 +44,10 @@ const Hideable = styled.div<HideableProps>`
 `;
 
 const SideDrawerLayout: FunctionComponent = ({ children }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useLocalStorage<boolean>('SideDrawerLayout:isExpanded', true);
   const childrenArray = Children.toArray(children);
 
-  const handleClickEspand = () => setIsExpanded(isExpanded => !isExpanded);
+  const handleClickEspand = () => setIsExpanded((isExpanded: boolean) => !isExpanded);
 
   return (
     <BaseLayout>
