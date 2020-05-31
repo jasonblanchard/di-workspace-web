@@ -96,6 +96,14 @@ export default function EntryListExperienceConnector({ children, patches }: Entr
       text: '',
     });
 
+    setEntries(entries => ([
+      {
+        id: entry.id,
+        preview: entryPreview(''),
+      },
+      ...entries,
+    ]));
+
     history.push(`/workspace/${entry.id}`)
   }
 
