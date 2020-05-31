@@ -34,6 +34,14 @@ const Main = styled.div`
   padding: 10px;
 `;
 
+interface HideableProps {
+  isHidden: boolean;
+}
+
+const Hideable = styled.div<HideableProps>`
+  display: ${({ isHidden }) => isHidden ? 'none' : 'block'};
+`;
+
 const SideDrawerLayout: FunctionComponent = ({ children }) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const childrenArray = Children.toArray(children);
@@ -45,7 +53,8 @@ const SideDrawerLayout: FunctionComponent = ({ children }) => {
       <Container isExpanded={isExpanded}>
         <Sidebar>
           <button onClick={handleClickEspand}>{isExpanded ? "<<" : ">>"}</button>
-          {isExpanded ? childrenArray[0] : childrenArray[1]}
+          <Hideable isHidden={!isExpanded}>{childrenArray[0]}</Hideable>
+          <Hideable isHidden={isExpanded}>{childrenArray[1]}</Hideable>
         </Sidebar>
         <Main>
           {childrenArray[2]}
