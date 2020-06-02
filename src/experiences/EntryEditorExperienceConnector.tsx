@@ -105,7 +105,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
         text
       });
       setIsSavingEntry(false);
-      setEntry(entry);
+      // setEntry(entry);
     } catch (error) {
       console.error(error);
       setIsSavingEntry(false);
