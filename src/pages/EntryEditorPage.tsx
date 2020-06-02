@@ -36,27 +36,50 @@ export default function EntryEditorPage({ connectors }: EntryEditorPageProps) {
     });
   }
 
+  // return (
+  //   <connectors.EntryListExperienceConnector patches={entryPatches}>
+  //     {({ isEntriesLoading, onClickNew, ...rest }) => {
+  //       return (
+  //         <SideDrawerLayout>
+  //           <nav>
+  //             {isEntriesLoading ? <div>loading...</div> : <EntryListExperience onClickNew={onClickNew} {...rest} />}
+  //           </nav>
+  //           <nav>
+  //             <button onClick={onClickNew}>+</button>
+  //           </nav>
+  //           <div role="main">
+  //             <connectors.EntryEditorExperienceConnector selectedEntryId={entryId} onChangeEntry={handleChangeEntry}>
+  //               {({ isLoadingEntry, ...rest }) => {
+  //                 return isLoadingEntry ? <div>loading...</div> : <EntryEditorExperience {...rest} />
+  //               }}
+  //             </connectors.EntryEditorExperienceConnector>
+  //           </div>
+  //         </SideDrawerLayout>
+  //       )
+  //     }}
+  //   </connectors.EntryListExperienceConnector>
+  // )
   return (
-    <connectors.EntryListExperienceConnector patches={entryPatches}>
-      {({ isEntriesLoading, onClickNew, ...rest }) => {
-        return (
-          <SideDrawerLayout>
-            <nav>
-              {isEntriesLoading ? <div>loading...</div> : <EntryListExperience onClickNew={onClickNew} {...rest} />}
-            </nav>
-            <nav>
-              <button onClick={onClickNew}>+</button>
-            </nav>
-            <div role="main">
-              <connectors.EntryEditorExperienceConnector selectedEntryId={entryId} onChangeEntry={handleChangeEntry}>
-                {({ isLoadingEntry, ...rest }) => {
-                  return isLoadingEntry ? <div>loading...</div> : <EntryEditorExperience {...rest} />
-                }}
-              </connectors.EntryEditorExperienceConnector>
-            </div>
-          </SideDrawerLayout>
-        )
-      }}
-    </connectors.EntryListExperienceConnector>
+    <SideDrawerLayout>
+      <connectors.EntryListExperienceConnector patches={entryPatches}>
+        {({ isEntriesLoading, onClickNew, ...rest }) => {
+          return (
+          <nav>
+            {isEntriesLoading ? <div>loading...</div> : <EntryListExperience onClickNew={onClickNew} {...rest} />}
+          </nav>
+          );
+        }}
+      </connectors.EntryListExperienceConnector>
+      <nav>
+        <button>+</button>
+      </nav>
+      <div role="main">
+        <connectors.EntryEditorExperienceConnector selectedEntryId={entryId} onChangeEntry={handleChangeEntry}>
+          {({ isLoadingEntry, ...rest }) => {
+            return isLoadingEntry ? <div>loading...</div> : <EntryEditorExperience {...rest} />
+          }}
+        </connectors.EntryEditorExperienceConnector>
+      </div>
+    </SideDrawerLayout>
   )
 }
