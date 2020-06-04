@@ -1,17 +1,16 @@
-import React, { useState, Children, FunctionComponent } from 'react';
+import React, { Children, FunctionComponent } from 'react';
 import styled from '@emotion/styled';
 
 import BaseLayout from './BaseLayout';
-import useLocalStorage from '../utils/useLocalStorage'
 
 interface ContainerProps {
-  isExpanded: boolean;
+  isCollapsed: boolean;
 }
 
 const Container = styled.div<ContainerProps>`
   height: 100%;
   display: grid;
-  grid-template-columns: ${({ isExpanded }) => isExpanded ? '15% 85%' : '5% 95%'};
+  grid-template-columns: ${({ isCollapsed }) => isCollapsed ? '5% 95%' : '15% 85%'};
   grid-template-areas: "sidebar main";
 
 
@@ -35,30 +34,25 @@ const Main = styled.div`
   padding: 10px;
 `;
 
-interface HideableProps {
-  isHidden: boolean;
+
+interface SideDrawerLayout {
+  isSidebarCollapsed: boolean;
+  children: React.ReactNode;
+  onToggleCollapse: () => void;
 }
 
-const Hideable = styled.div<HideableProps>`
-  display: ${({ isHidden }) => isHidden ? 'none' : 'block'};
-`;
-
-const SideDrawerLayout: FunctionComponent = ({ children }) => {
-  const [isExpanded, setIsExpanded] = useLocalStorage<boolean>('SideDrawerLayout:isExpanded', true);
+const SideDrawerLayout: FunctionComponent<SideDrawerLayout> = ({ isSidebarCollapsed, children, onToggleCollapse }) => {
   const childrenArray = Children.toArray(children);
-
-  const handleClickEspand = () => setIsExpanded((isExpanded: boolean) => !isExpanded);
 
   return (
     <BaseLayout>
-      <Container isExpanded={isExpanded}>
+      <Container isCollapsed={isSidebarCollapsed}>
         <Sidebar>
-          <button onClick={handleClickEspand}>{isExpanded ? "<<" : ">>"}</button>
-          <Hideable isHidden={!isExpanded}>{childrenArray[0]}</Hideable>
-          <Hideable isHidden={isExpanded}>{childrenArray[1]}</Hideable>
+          <button onClick={onToggleCollapse}>{isSidebarCollapsed ? '>>' : '<<'}</button>
+          {childrenArray[0]}
         </Sidebar>
         <Main>
-          {childrenArray[2]}
+          {childrenArray[1]}
         </Main>
       </Container>
     </BaseLayout>
