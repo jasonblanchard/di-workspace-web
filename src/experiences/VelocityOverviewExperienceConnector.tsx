@@ -42,9 +42,9 @@ export default function VelocityOverviewExperienceConnector({ children }: Veloci
   useEffect(() => {
     async function fetchVelocityOverview() {
       setIsVelocityOverviewLoading(true)
-      const { velocityOverviewResponse } = await client.request(velocityOverviewQuery);
+      const { velocityOverview } = await client.request(velocityOverviewQuery);
 
-      setVelocities(groupVelocityByWeek(velocityOverviewResponse))
+      setVelocities(groupVelocityByWeek(velocityOverview))
       setIsVelocityOverviewLoading(false)
     }
 
