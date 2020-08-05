@@ -44,7 +44,14 @@ export default function VelocityOverviewExperienceConnector({ children }: Veloci
       setIsVelocityOverviewLoading(true)
       const { velocityOverview } = await client.request(velocityOverviewQuery);
 
-      setVelocities(groupVelocityByWeek(velocityOverview))
+      const velocitiesWithDate = velocityOverview.map((velocity: { day: Date, score: number }) => {
+        return {
+          day: new Date(velocity.day),
+          score: velocity.score,
+        }
+      })
+
+      setVelocities(groupVelocityByWeek(velocitiesWithDate))
       setIsVelocityOverviewLoading(false)
     }
 
