@@ -7,8 +7,10 @@ import {
 
 import EntryEditorPage from './pages/EntryEditorPage';
 import WorkspacePage from './pages/WorkspacePage';
+import InsightsPage from './pages/InsightsPage';
 import EntryEditorExperienceConnector from './experiences/EntryEditorExperienceConnector';
 import EntryListExperienceConnector from './experiences/EntryListExperienceConnector';
+import VelocityOverviewExperienceConnector from './experiences/VelocityOverviewExperienceConnector';
 
 const WorkspacePageConnectors = {
   EntryListExperienceConnector,
@@ -17,6 +19,10 @@ const WorkspacePageConnectors = {
 const EntryEditorPageConnectors = {
   EntryEditorExperienceConnector,
   EntryListExperienceConnector,
+}
+
+const InsightsPageConnectors = {
+  VelocityOverviewExperienceConnector
 }
 
 export default function App() {
@@ -28,6 +34,9 @@ export default function App() {
         </Route>
         <Route path="/workspace/:entryId" exact>
           <EntryEditorPage connectors={EntryEditorPageConnectors} />
+        </Route>
+        <Route path="/insights" exact>
+          <InsightsPage connectors={InsightsPageConnectors} />
         </Route>
       </Switch>
     </Router>
