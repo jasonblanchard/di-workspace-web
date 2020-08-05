@@ -56,7 +56,7 @@ export default function VelocityOverviewExperienceConnector({ children }: Veloci
     }
 
     fetchVelocityOverview();
-  })
+  }, [])
 
   return children({
     velocities,
