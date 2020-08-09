@@ -77,7 +77,7 @@ export default function EntryListExperienceConnector({ children, patches }: Entr
     async function fetchEntries() {
       setIsEntriesLoaded(true);
       const { entryList } = await client.request(listQuery, {
-        first: 10
+        first: 50
       });
       const { edges, pageInfo } = entryList;
       setEntries(edges.map((entry: Entry) => ({
