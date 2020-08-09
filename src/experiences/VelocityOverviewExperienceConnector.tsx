@@ -27,7 +27,7 @@ interface VelocityOverviewConnectorRenderProps {
   isVelocityOverviewLoading: boolean
 }
 
-const baseUrl = '/api/entry/';
+const baseUrl = '/api/graphql/';
 const csrfToken = getCsrfToken();
 const client = new GraphQLClient(baseUrl, {
   headers: {
