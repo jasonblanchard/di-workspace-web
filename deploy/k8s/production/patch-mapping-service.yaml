@@ -3,13 +3,11 @@ kind: Mapping
 metadata:
   name: workspace-web
 spec:
-  prefix: /workspace/
-  rewrite: '/'
+  service: workspace-web-production:8080
 ---
 apiVersion: getambassador.io/v1
 kind: Mapping
 metadata:
   name: insights
 spec:
-  prefix: /insights/
-  rewrite: '/'
+  service: workspace-web-production:8080

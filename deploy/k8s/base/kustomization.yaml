@@ -1,11 +1,12 @@
-namespace: di
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- sa.yaml
-- deployment.yaml
-- service.yaml
-- mapping.yaml
+  - sa.yaml
+  - deployment.yaml
+  - service.yaml
+  - mapping.yaml
+commonLabels:
+  app: workspace-web
 configMapGenerator:
 - name: workspace-web-config
   literals:
@@ -14,6 +15,3 @@ configMapGenerator:
   - BASE_PATH='/workspace/'
   - PAGE_TITLE='Workspace'
   - APP_CONTAINER_ID='app'
-images:
-- name: jasonblanchard/di-workspace-web
-  newTag: latest
