@@ -15,3 +15,13 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         tags: "latest,${{ github.sha }}"
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: jasonblanchard/di-deploy/.github/actions/deploy-dispatch
+        with:
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          token: ${{ secrets.DEPLOY_TOKEN }}
+          service: workspace-web
+          environment: production
+          version: ${{ github.sha }}
