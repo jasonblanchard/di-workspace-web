@@ -16,6 +16,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         tags: "latest,${{ github.sha }}"
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: jasonblanchard/di-deploy/.github/actions/deploy-dispatch@master
