@@ -19,7 +19,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: jasonblanchard/di-deploy/.github/actions/deploy-dispatch@master
+      - uses: jasonblanchard/di-deploy/.github/actions/deploy-dispatch@main
         with:
           username: ${{ secrets.DEPLOY_USERNAME }}
           token: ${{ secrets.DEPLOY_TOKEN }}
