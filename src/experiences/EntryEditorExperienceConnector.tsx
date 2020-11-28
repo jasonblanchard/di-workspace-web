@@ -34,7 +34,7 @@ interface Entry {
 
 const readEntryQuery = `
   query readEntry($id: String!) {
-    entry(id: $id) {
+    readEntry(id: $id) {
       id
       text
       createdAt
