@@ -32,8 +32,8 @@ interface Entry {
   updatedAt?: string;
 }
 
-const getQuery = `
-  query entry($id: String!) {
+const readEntryQuery = `
+  query readEntry($id: String!) {
     entry(id: $id) {
       id
       text
@@ -89,7 +89,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
     async function fetchEntry() {
       if (!selectedEntryId) return;
       setIsLoadingEntry(true);
-      const { entry } = await client.request(getQuery, { id: selectedEntryId });
+      const { readEntry: entry } = await client.request(readEntryQuery, { id: selectedEntryId });
       setEntry(entry);
       setIsLoadingEntry(false);
     }
