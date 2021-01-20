@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GraphQLClient } from 'graphql-request';
 import { useHistory } from "react-router-dom";
 import debounce from 'lodash.debounce';
+import { NotebookClient, RequestHeadersHandler } from "@jasonblanchard/di-apis"
 
 import { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
 import getCsrfToken from '../utils/getCsrfToken';
@@ -89,7 +90,15 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
     async function fetchEntry() {
       if (!selectedEntryId) return;
       setIsLoadingEntry(true);
-      const { readEntry: entry } = await client.request(readEntryQuery, { id: selectedEntryId });
+      const notebookClient = new NotebookClient(`${location.protocol}//${location.hostname}/notebook`)
+      // const { readEntry: entry } = await client.request(readEntryQuery, { id: selectedEntryId });
+      const { body: entryResponse } = await notebookClient.Notebook_GetEntry({ id: selectedEntryId })
+      const entry = {
+        text: entryResponse.text,
+        creatorId: entryResponse.creator_id,
+        createdAt: entryResponse.created_at,
+        updatedAt: entryResponse.updated_at,
+      }
       setEntry(entry);
       setIsLoadingEntry(false);
     }

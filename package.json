@@ -41,6 +41,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
+    "@jasonblanchard/di-apis": "0.0.1",
     "@types/jest": "^26.0.8",
     "@types/react-router-dom": "^5.1.3",
     "babel-polyfill": "^6.26.0",
