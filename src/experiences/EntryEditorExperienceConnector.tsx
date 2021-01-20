@@ -71,6 +71,8 @@ const client = new GraphQLClient(baseUrl, {
   }
 });
 
+const notebookClient = new NotebookClient(`${location.protocol}//${location.hostname}/notebook`)
+
 function mapSaveStateToSaveStatusIndicatorVariant(isSavingEntry: boolean, didSaveEntryFail: boolean) {
   if (didSaveEntryFail) return SaveStatusIndicatorVariant.Error;
   if (isSavingEntry) return SaveStatusIndicatorVariant.Saving;
@@ -90,7 +92,6 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
     async function fetchEntry() {
       if (!selectedEntryId) return;
       setIsLoadingEntry(true);
-      const notebookClient = new NotebookClient(`${location.protocol}//${location.hostname}/notebook`)
       // const { readEntry: entry } = await client.request(readEntryQuery, { id: selectedEntryId });
       const { body: entryResponse } = await notebookClient.Notebook_GetEntry({ id: selectedEntryId })
       const entry = {
