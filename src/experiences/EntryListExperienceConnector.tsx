@@ -53,6 +53,10 @@ const client = new GraphQLClient(baseUrl, {
 });
 
 const notebookClient = new NotebookClient(`${location.protocol}//${location.hostname}/notebook`)
+notebookClient.setConfigureRequestHandler(headers => ({
+  ...headers,
+  'CSRF-Token': csrfToken,
+}));
 
 export default function EntryListExperienceConnector({ children, patches }: EntryListExperienceConnectorProps) {
   const [entries, setEntries] = useState<EntryPreview[]>([]);
