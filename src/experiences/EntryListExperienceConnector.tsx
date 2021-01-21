@@ -1,27 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { GraphQLClient } from 'graphql-request';
 import { useHistory } from "react-router-dom";
 import { NotebookClient, v2ListEntriesResponse } from "@jasonblanchard/di-apis"
 
 import entryPreview from '../utils/entryPreview';
 import getCsrfToken from '../utils/getCsrfToken';
 
-const createQuery = `
-  mutation createEntry($text: String!) {
-      entry: createEntry(text: $text) {
-        id
-      }
-    }
-`;
-
 interface EntryPreview {
   id: string;
   preview: string;
-}
-
-interface Entry {
-  id: string;
-  text: string;
 }
 
 interface Patch {
@@ -43,14 +29,7 @@ export interface EntryListExperienceConnectorRenderProps {
   showNextButton: boolean;
 }
 
-
-const baseUrl = '/api/graphql/';
 const csrfToken = getCsrfToken();
-const client = new GraphQLClient(baseUrl, {
-  headers: {
-    'CSRF-Token': csrfToken,
-  }
-});
 
 const notebookClient = new NotebookClient(`${location.protocol}//${location.hostname}/notebook`)
 notebookClient.setRequestHeadersHandler(headers => ({
