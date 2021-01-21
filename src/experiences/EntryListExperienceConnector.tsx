@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { GraphQLClient } from 'graphql-request';
 import { useHistory } from "react-router-dom";
+import { NotebookClient } from "@jasonblanchard/di-apis"
 
 import entryPreview from '../utils/entryPreview';
 import getCsrfToken from '../utils/getCsrfToken';
@@ -66,6 +67,8 @@ const client = new GraphQLClient(baseUrl, {
   }
 });
 
+const notebookClient = new NotebookClient(`${location.protocol}//${location.hostname}/notebook`)
+
 export default function EntryListExperienceConnector({ children, patches }: EntryListExperienceConnectorProps) {
   const [entries, setEntries] = useState<EntryPreview[]>([]);
   const [isEntriesLoading, setIsEntriesLoaded] = useState(false);
@@ -76,16 +79,20 @@ export default function EntryListExperienceConnector({ children, patches }: Entr
   useEffect(() => {
     async function fetchEntries() {
       setIsEntriesLoaded(true);
-      const { entryList } = await client.request(listQuery, {
-        first: 50
-      });
-      const { edges, pageInfo } = entryList;
-      setEntries(edges.map((entry: Entry) => ({
+      // const { entryList } = await client.request(listQuery, {
+      //   first: 50
+      // });
+      // const { edges, pageInfo } = entryList;
+      const { body } = await notebookClient.Notebook_ListEntries({
+        pageSize: 50,
+      })
+
+      setEntries(body.entries.map((entry: Entry) => ({
         id: entry.id,
         preview: entryPreview(entry.text)
       })));
-      setHasNextPage(pageInfo.hasNextPage);setNextCursor
-      setNextCursor(pageInfo.endCursor);
+      setHasNextPage(body.hasNextPage);
+      setNextCursor(body.nextPageToken);
       setIsEntriesLoaded(false);
     }
     fetchEntries();

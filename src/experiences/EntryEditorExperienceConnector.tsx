@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { GraphQLClient } from 'graphql-request';
 import { useHistory } from "react-router-dom";
 import debounce from 'lodash.debounce';
-import { NotebookClient, RequestHeadersHandler } from "@jasonblanchard/di-apis"
+import { NotebookClient } from "@jasonblanchard/di-apis"
 
 import { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
 import getCsrfToken from '../utils/getCsrfToken';
