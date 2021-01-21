@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { GraphQLClient } from 'graphql-request';
 import { useHistory } from "react-router-dom";
-import { NotebookClient } from "@jasonblanchard/di-apis"
+import { NotebookClient, v2ListEntriesResponse } from "@jasonblanchard/di-apis"
 
 import entryPreview from '../utils/entryPreview';
 import getCsrfToken from '../utils/getCsrfToken';
@@ -73,22 +73,24 @@ export default function EntryListExperienceConnector({ children, patches }: Entr
   const [entries, setEntries] = useState<EntryPreview[]>([]);
   const [isEntriesLoading, setIsEntriesLoading] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
-  const [nextCursor, setNextCursor] = useState();
+  const [nextCursor, setNextCursor] = useState("");
   const history = useHistory();
 
   useEffect(() => {
     async function fetchEntries() {
       setIsEntriesLoading(true);
-      const { body } = await notebookClient.Notebook_ListEntries({
+      const response = await notebookClient.Notebook_ListEntries({
         pageSize: 50,
       })
+      const body: v2ListEntriesResponse = response.body
+      const entries = body.entries || []
 
-      setEntries(body.entries.map((entry: Entry) => ({
-        id: entry.id,
-        preview: entryPreview(entry.text)
+      setEntries(entries.map((entry) => ({
+        id: entry.id || "",
+        preview: entryPreview(entry.text || "")
       })));
-      setHasNextPage(body.has_next_page);
-      setNextCursor(body.next_page_token);
+      setHasNextPage(body.has_next_page || false);
+      setNextCursor(body.next_page_token || "");
       setIsEntriesLoading(false);
     }
     fetchEntries();
@@ -111,18 +113,19 @@ export default function EntryListExperienceConnector({ children, patches }: Entr
   }
 
   async function onClickMore() {
-    const { body } = await notebookClient.Notebook_ListEntries({
+    const response = await notebookClient.Notebook_ListEntries({
       pageSize: 50,
       pageToken: nextCursor,
     })
-    // const { edges, pageInfo } = entryList;
-    const nextEntries = body.entries.map((entry: Entry) => ({
-      id: entry.id,
-      preview: entryPreview(entry.text)
+    const body: v2ListEntriesResponse = response.body
+    const entries = body.entries || []
+    const nextEntries = entries.map((entry) => ({
+      id: entry.id || "",
+      preview: entryPreview(entry.text || "")
     }))
     setEntries(entries => [...entries, ...nextEntries]);
-    setHasNextPage(body.has_next_page);
-    setNextCursor(body.next_page_token);
+    setHasNextPage(body.has_next_page || false);
+    setNextCursor(body.next_page_token || "");
   }
 
   const patchedEntries = entries.map((entry: EntryPreview) => {
