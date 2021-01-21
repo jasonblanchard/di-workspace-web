@@ -6,21 +6,6 @@ import { NotebookClient, v2ListEntriesResponse } from "@jasonblanchard/di-apis"
 import entryPreview from '../utils/entryPreview';
 import getCsrfToken from '../utils/getCsrfToken';
 
-const listQuery = `
-  query($first: Int, $after: String) {
-    entryList: entries(first: $first, after: $after) {
-      edges {
-        id
-        text
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-    }
-  }
-`
-
 const createQuery = `
   mutation createEntry($text: String!) {
       entry: createEntry(text: $text) {
@@ -97,9 +82,11 @@ export default function EntryListExperienceConnector({ children, patches }: Entr
   }, []);
 
   async function onClickNew() {
-    const { entry } = await client.request(createQuery, {
-      text: '',
-    });
+    const { body: entry } = await notebookClient.Notebook_CreateEntry({
+      body: {
+        text: ""
+      }
+    })
 
     setEntries(entries => ([
       {
