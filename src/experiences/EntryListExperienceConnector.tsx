@@ -71,18 +71,14 @@ const notebookClient = new NotebookClient(`${location.protocol}//${location.host
 
 export default function EntryListExperienceConnector({ children, patches }: EntryListExperienceConnectorProps) {
   const [entries, setEntries] = useState<EntryPreview[]>([]);
-  const [isEntriesLoading, setIsEntriesLoaded] = useState(false);
+  const [isEntriesLoading, setIsEntriesLoading] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [nextCursor, setNextCursor] = useState();
   const history = useHistory();
 
   useEffect(() => {
     async function fetchEntries() {
-      setIsEntriesLoaded(true);
-      // const { entryList } = await client.request(listQuery, {
-      //   first: 50
-      // });
-      // const { edges, pageInfo } = entryList;
+      setIsEntriesLoading(true);
       const { body } = await notebookClient.Notebook_ListEntries({
         pageSize: 50,
       })
@@ -91,9 +87,9 @@ export default function EntryListExperienceConnector({ children, patches }: Entr
         id: entry.id,
         preview: entryPreview(entry.text)
       })));
-      setHasNextPage(body.hasNextPage);
-      setNextCursor(body.nextPageToken);
-      setIsEntriesLoaded(false);
+      setHasNextPage(body.has_next_page);
+      setNextCursor(body.next_page_token);
+      setIsEntriesLoading(false);
     }
     fetchEntries();
   }, []);
@@ -115,18 +111,18 @@ export default function EntryListExperienceConnector({ children, patches }: Entr
   }
 
   async function onClickMore() {
-    const { entryList } = await client.request(listQuery, {
-      first: 10,
-      after: nextCursor,
-    });
-    const { edges, pageInfo } = entryList;
-    const nextEntries = edges.map((entry: Entry) => ({
+    const { body } = await notebookClient.Notebook_ListEntries({
+      pageSize: 50,
+      pageToken: nextCursor,
+    })
+    // const { edges, pageInfo } = entryList;
+    const nextEntries = body.entries.map((entry: Entry) => ({
       id: entry.id,
       preview: entryPreview(entry.text)
     }))
     setEntries(entries => [...entries, ...nextEntries]);
-    setHasNextPage(pageInfo.hasNextPage); setNextCursor
-    setNextCursor(pageInfo.endCursor);
+    setHasNextPage(body.has_next_page);
+    setNextCursor(body.next_page_token);
   }
 
   const patchedEntries = entries.map((entry: EntryPreview) => {
