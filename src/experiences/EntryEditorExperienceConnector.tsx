@@ -33,17 +33,6 @@ interface Entry {
   updatedAt?: string;
 }
 
-const readEntryQuery = `
-  query readEntry($id: String!) {
-    readEntry(id: $id) {
-      id
-      text
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
 const updateQuery = `
   mutation updateEntry($id: String!, $text: String!) {
       entry: updateEntry(id: $id, text: $text) {
@@ -51,14 +40,6 @@ const updateQuery = `
         text
         createdAt
         updatedAt
-      }
-    }
-`;
-
-const deleteQuery = `
-  mutation deleteEntry($id: String!) {
-      deleteEntry(id: $id) {
-        result
       }
     }
 `;
@@ -92,7 +73,6 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
     async function fetchEntry() {
       if (!selectedEntryId) return;
       setIsLoadingEntry(true);
-      // const { readEntry: entry } = await client.request(readEntryQuery, { id: selectedEntryId });
       const { body: entryResponse } = await notebookClient.Notebook_GetEntry({ id: selectedEntryId })
       const entry = {
         text: entryResponse.text,
@@ -131,7 +111,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
   }, [selectedEntryId]);
 
   async function deleteEntry() {
-    await client.request(deleteQuery, { id: selectedEntryId });
+    await notebookClient.Notebook_DeleteEntry({ id: selectedEntryId || "" })
     history.push(`/workspace`);
   }
 
