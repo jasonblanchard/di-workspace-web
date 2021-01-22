@@ -53,6 +53,10 @@ const client = new GraphQLClient(baseUrl, {
 });
 
 const notebookClient = new NotebookClient(`${location.protocol}//${location.hostname}/notebook`)
+notebookClient.setRequestHeadersHandler(headers => ({
+  ...headers,
+  'CSRF-Token': csrfToken,
+}));
 
 function mapSaveStateToSaveStatusIndicatorVariant(isSavingEntry: boolean, didSaveEntryFail: boolean) {
   if (didSaveEntryFail) return SaveStatusIndicatorVariant.Error;
