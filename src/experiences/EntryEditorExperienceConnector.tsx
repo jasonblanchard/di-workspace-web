@@ -94,10 +94,16 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
     setDidSaveEntryFiled(false);
     setIsSavingEntry(true);
     try {
-      const { entry } = await client.request(updateQuery, {
-        id: selectedEntryId,
-        text
-      });
+      // const { entry } = await client.request(updateQuery, {
+      //   id: selectedEntryId,
+      //   text
+      // });
+      await notebookClient.Notebook_UpdateEntry({
+        id: selectedEntryId || "",
+        body: {
+          text
+        }
+      })
       setIsSavingEntry(false);
       // setEntry(entry);
     } catch (error) {
