@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { GraphQLClient } from 'graphql-request';
 import { useHistory } from "react-router-dom";
 import debounce from 'lodash.debounce';
 import { NotebookClient } from "@jasonblanchard/di-apis"
@@ -33,24 +32,7 @@ interface Entry {
   updatedAt?: string;
 }
 
-const updateQuery = `
-  mutation updateEntry($id: String!, $text: String!) {
-      entry: updateEntry(id: $id, text: $text) {
-        id
-        text
-        createdAt
-        updatedAt
-      }
-    }
-`;
-
-const baseUrl = '/api/graphql/';
 const csrfToken = getCsrfToken();
-const client = new GraphQLClient(baseUrl, {
-  headers: {
-    'CSRF-Token': csrfToken,
-  }
-});
 
 const notebookClient = new NotebookClient(`${location.protocol}//${location.hostname}/notebook`)
 notebookClient.setRequestHeadersHandler(headers => ({
@@ -94,10 +76,6 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
     setDidSaveEntryFiled(false);
     setIsSavingEntry(true);
     try {
-      // const { entry } = await client.request(updateQuery, {
-      //   id: selectedEntryId,
-      //   text
-      // });
       await notebookClient.Notebook_UpdateEntry({
         id: selectedEntryId || "",
         body: {

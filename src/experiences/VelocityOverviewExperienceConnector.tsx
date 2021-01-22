@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { GraphQLClient } from 'graphql-request';
 
-import groupVelocityByWeek from '../utils/groupVelocityByWeek';
-import getCsrfToken from '../utils/getCsrfToken';
+// import groupVelocityByWeek from '../utils/groupVelocityByWeek';
+// import getCsrfToken from '../utils/getCsrfToken';
 
-const velocityOverviewQuery = `
-  {
-    velocityOverview {
-      day
-      score
-    }
-  }
-`
+// const velocityOverviewQuery = `
+//   {
+//     velocityOverview {
+//       day
+//       score
+//     }
+//   }
+// `
 
 interface VelocityOverviewExperienceConnectorProps {
   children: (arg0: VelocityOverviewConnectorRenderProps) => React.ReactElement;
@@ -27,13 +26,7 @@ interface VelocityOverviewConnectorRenderProps {
   isVelocityOverviewLoading: boolean
 }
 
-const baseUrl = '/api/graphql/';
-const csrfToken = getCsrfToken();
-const client = new GraphQLClient(baseUrl, {
-  headers: {
-    'CSRF-Token': csrfToken,
-  }
-});
+// const csrfToken = getCsrfToken();
 
 export default function VelocityOverviewExperienceConnector({ children }: VelocityOverviewExperienceConnectorProps) {
   const [velocities, setVelocities] = useState<Velocity[][]>([]);
@@ -42,17 +35,17 @@ export default function VelocityOverviewExperienceConnector({ children }: Veloci
   useEffect(() => {
     async function fetchVelocityOverview() {
       setIsVelocityOverviewLoading(true)
-      const { velocityOverview } = await client.request(velocityOverviewQuery);
+      // const { velocityOverview } = await client.request(velocityOverviewQuery);
 
-      const velocitiesWithDate = velocityOverview.map((velocity: { day: Date, score: number }) => {
-        return {
-          day: new Date(velocity.day),
-          score: velocity.score,
-        }
-      })
+      // const velocitiesWithDate = velocityOverview.map((velocity: { day: Date, score: number }) => {
+      //   return {
+      //     day: new Date(velocity.day),
+      //     score: velocity.score,
+      //   }
+      // })
 
-      setVelocities(groupVelocityByWeek(velocitiesWithDate))
-      setIsVelocityOverviewLoading(false)
+      // setVelocities(groupVelocityByWeek(velocitiesWithDate))
+      // setIsVelocityOverviewLoading(false)
     }
 
     fetchVelocityOverview();
