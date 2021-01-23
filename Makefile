@@ -26,3 +26,6 @@ deploy:
 
 swap:
 	telepresence --swap-deployment workspace-web --namespace di --expose 8080 --docker-run -v $(shell pwd)/build:/usr/src/app/public -p 8080:8080 -e PORT=8080 -e JS_BUNDLE_PATH=app.js -e PAGE_TITLE="App Dev" jasonblanchard/di-fe-server
+
+mockserver:
+	prism mock -d https://raw.githubusercontent.com/jasonblanchard/di-apis/main/gen/pb-go/notebook.swagger.json

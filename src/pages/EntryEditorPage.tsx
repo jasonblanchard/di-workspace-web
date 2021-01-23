@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHotkeys } from "react-hotkeys-hook";
 import { useParams } from 'react-router-dom';
 
 import SideDrawerLayout from './SideDrawerLayout';
@@ -23,10 +24,16 @@ interface EntryEditorPageProps {
 export default function EntryEditorPage({ connectors }: EntryEditorPageProps) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useLocalStorage<boolean>('SideDrawerLayout:isCollapsed', true);
 
-  const { entryId } = useParams();
+  interface Params {
+    entryId: string
+  }
+
+  const { entryId } = useParams<Params>();
   const [entryPatches, setEntryPatches] = useState<EntryPatch>();
 
   const handleToggleCollapse = () => setIsSidebarCollapsed((isSidebarCollapsed: boolean) => !isSidebarCollapsed);
+
+  useHotkeys('command+\\', handleToggleCollapse, [isSidebarCollapsed])
 
   function handleChangeEntry(id: string, _field: string, value: string) {
     setEntryPatches((patches) => {

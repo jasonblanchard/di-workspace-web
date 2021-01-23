@@ -32,10 +32,10 @@ module.exports = {
     ],
   },
   plugins: removeEmpty([
-    // ifDevelopment(new HtmlWebpackPlugin({
-    //   template: 'src/index.html',
-    //   inject: true,
-    // })),
+    ifDevelopment(new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      inject: true,
+    })),
     ifProduction(new CleanWebpackPlugin({
       cleanOnceBeforeBuildPatterns: [
         outputDir,
@@ -63,9 +63,14 @@ module.exports = {
     disableHostCheck: true,
     host: '0.0.0.0',
     proxy: {
-      '/api': {
-        target: 'http://192.168.64.6:30873'
-        // target: 'http://localhost:4000'
+      '/notebook': {
+        target: 'http://127.0.0.1:4010',
+        pathRewrite: {
+          "^/notebook": ""
+        },
+        headers: {
+          Authorization: "Bearer abcd"
+        }
       },
     },
   },

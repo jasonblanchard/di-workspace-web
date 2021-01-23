@@ -30,8 +30,8 @@ export interface EntryListExperienceConnectorRenderProps {
 }
 
 const csrfToken = getCsrfToken();
-
-const notebookClient = new NotebookClient(`${location.protocol}//${location.hostname}/notebook`)
+const path = `${location.protocol}//${location.hostname}${location.port ? ":" : ""}${location.port ? location.port : ""}/notebook`
+const notebookClient = new NotebookClient(path)
 notebookClient.setRequestHeadersHandler(headers => ({
   ...headers,
   'CSRF-Token': csrfToken,

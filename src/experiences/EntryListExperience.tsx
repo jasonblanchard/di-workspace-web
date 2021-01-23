@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHotkeys } from "react-hotkeys-hook";
 
 import EntryList from '../components/EntriesList';
 
@@ -15,6 +16,10 @@ interface EntryListExperienceProps {
 }
 
 export default function EntryListExperience({ entries, onClickNew, onClickMore, showNextButton }: EntryListExperienceProps) {
+  useHotkeys('shift+n', () => {
+    onClickNew()
+  })
+
   return (
     <>
       <button onClick={onClickNew}>new</button>
