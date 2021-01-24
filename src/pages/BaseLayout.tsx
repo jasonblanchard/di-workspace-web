@@ -12,13 +12,18 @@ const Header = styled.header`
   padding: 10px;
 `
 
+const StyledLink = styled(Link)`
+  font-family: Playfair Display, serif;
+  font-size: 2.5rem;
+`
+
 const BaseLayout: FunctionComponent = ({ children }) => {
   return (
     <>
       <GlobalStyles />
       <Container className="BaseLayout">
         <Header>
-          <Link to="/workspace/">Di</Link>
+          <StyledLink to="/workspace/">Di</StyledLink>
         </Header>
         {children}
       </Container>

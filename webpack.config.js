@@ -66,13 +66,18 @@ module.exports = {
     host: '0.0.0.0',
     proxy: {
       '/notebook': {
-        target: 'http://127.0.0.1:4010',
-        pathRewrite: {
-          "^/notebook": ""
-        },
+        // target: 'http://127.0.0.1:4010',
+        // pathRewrite: {
+        //   "^/notebook": ""
+        // },
+        target: "https://di7.blanktech.net",
         headers: {
-          Authorization: "Bearer abcd"
-        }
+          // Authorization: "Bearer abcd"
+          Authorization: `Bearer ${process.env.API_TOKEN}`
+        },
+        changeOrigin: true,
+        secure: false,
+        logLevel: 'debug'
       },
     },
   },

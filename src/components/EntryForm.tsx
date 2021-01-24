@@ -19,6 +19,8 @@ interface EntryFormProps {
 const Textarea = styled.textarea`
   height: 80vh;
   width: 100%;
+  padding: 10px;
+  border: 0;
 `;
 
 const ActionsContainer = styled.div`
