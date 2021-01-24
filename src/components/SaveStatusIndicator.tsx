@@ -26,6 +26,10 @@ interface SaveContainerProps {
   color: string;
 }
 
+const Inner = styled.span`
+  color: ${props => props.theme.typography.colors.secondary}
+`
+
 const SaveContainer = styled.span<SaveContainerProps>`
   align-items: center;
   display: flex;
@@ -42,5 +46,9 @@ const SaveContainer = styled.span<SaveContainerProps>`
 
 export default function SaveStatusIndicator({ variant }: SaveStatusIndicatorProps) {
   const { text, color } = variantToProps(variant);
-  return <SaveContainer color={color}>{text}</SaveContainer>;
+  return (
+    <SaveContainer color={color}>
+      <Inner>{text}</Inner>
+    </SaveContainer>
+  );
 }

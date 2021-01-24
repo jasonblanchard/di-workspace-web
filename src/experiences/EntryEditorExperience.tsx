@@ -21,7 +21,23 @@ interface EntryEditorExperienceProps {
 const MetadataContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  padding: 10px;
 `;
+
+const TimestampContainer = styled.div`
+  color: ${props => props.theme.typography.colors.secondary};
+`;
+
+function formatDate(locale, dateTime?: string, ) {
+  if (!dateTime) return '';
+  const date = new Date(dateTime)
+  const dateFormat = new Intl.DateTimeFormat(locale, {
+    year: 'numeric', month: 'numeric', day: 'numeric',
+    hour: 'numeric', minute: 'numeric',
+  })
+  return dateFormat.format(date)
+}
+
 
 export default function EntryEditorExperience({ entryFormInitialValues, isEntryFormDisabled, saveStatusIndicatorVariant, onSubmitEntryForm, onChangeEntryForm, onClickConfirmDeleteEntry, entryCreatedAt, entryUpdatedAt }: EntryEditorExperienceProps) {
   return (
@@ -30,9 +46,9 @@ export default function EntryEditorExperience({ entryFormInitialValues, isEntryF
         <div>
           <SaveStatusIndicator variant={saveStatusIndicatorVariant} />
         </div>
-        <div>
-          {entryCreatedAt} {entryUpdatedAt ? `• ${entryUpdatedAt}` : null}
-        </div>
+        <TimestampContainer>
+          {formatDate('en-US', entryCreatedAt)} {entryUpdatedAt ? `• ${formatDate('en-US', entryUpdatedAt)}` : null}
+        </TimestampContainer>
       </MetadataContainer>
       <EntryForm
         initialValues={entryFormInitialValues}

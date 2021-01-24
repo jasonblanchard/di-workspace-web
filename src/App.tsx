@@ -1,10 +1,12 @@
 import React from 'react';
+import { jsx, ThemeProvider } from '@emotion/react'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
 
+import themes from './themes'
 import EntryEditorPage from './pages/EntryEditorPage';
 import WorkspacePage from './pages/WorkspacePage';
 import InsightsPage from './pages/InsightsPage';
@@ -27,18 +29,20 @@ const InsightsPageConnectors = {
 
 export default function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/workspace" exact>
-          <WorkspacePage connectors={WorkspacePageConnectors} />
-        </Route>
-        <Route path="/workspace/:entryId" exact>
-          <EntryEditorPage connectors={EntryEditorPageConnectors} />
-        </Route>
-        <Route path="/insights" exact>
-          <InsightsPage connectors={InsightsPageConnectors} />
-        </Route>
-      </Switch>
-    </Router>
+    <ThemeProvider theme={themes.light}>
+      <Router>
+        <Switch>
+          <Route path="/workspace" exact>
+            <WorkspacePage connectors={WorkspacePageConnectors} />
+          </Route>
+          <Route path="/workspace/:entryId" exact>
+            <EntryEditorPage connectors={EntryEditorPageConnectors} />
+          </Route>
+          <Route path="/insights" exact>
+            <InsightsPage connectors={InsightsPageConnectors} />
+          </Route>
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
 }

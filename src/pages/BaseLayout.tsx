@@ -9,12 +9,12 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
-  padding: 10px;
+  padding: 0 10px;
 `
 
 const StyledLink = styled(Link)`
-  font-family: Playfair Display, serif;
-  font-size: 2.5rem;
+  font-family: ${props => props.theme.typography.fonts.serif};
+  font-size: ${props => props.theme.typography.sizes.mainHeading};
 `
 
 const BaseLayout: FunctionComponent = ({ children }) => {
@@ -23,7 +23,9 @@ const BaseLayout: FunctionComponent = ({ children }) => {
       <GlobalStyles />
       <Container className="BaseLayout">
         <Header>
-          <StyledLink to="/workspace/">Di</StyledLink>
+          <h1>
+            <StyledLink to="/workspace/">Di</StyledLink>
+          </h1>
         </Header>
         {children}
       </Container>
