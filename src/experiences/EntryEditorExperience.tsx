@@ -28,7 +28,7 @@ const TimestampContainer = styled.div`
   color: ${props => props.theme.typography.colors.secondary};
 `;
 
-function formatDate(locale, dateTime?: string, ) {
+function formatDate(locale: string, dateTime?: string, ) {
   if (!dateTime) return '';
   const date = new Date(dateTime)
   const dateFormat = new Intl.DateTimeFormat(locale, {
