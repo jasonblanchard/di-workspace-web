@@ -102,7 +102,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
 
   async function deleteEntry() {
     await notebookClient.Notebook_DeleteEntry({ id: selectedEntryId || "" })
-    history.push(`/workspace`);
+    history.push(`/workspace/`);
   }
 
   function handleChangeEntryForm(field: string, value: string) {
