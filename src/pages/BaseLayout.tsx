@@ -29,7 +29,7 @@ const BaseLayout: FunctionComponent = ({ children }) => {
           <h1>
             <StyledLink to="/workspace/">Di</StyledLink>
           </h1>
-          <Link to="/search">search</Link>
+          <Link to="/search/">search</Link>
         </Header>
         {children}
       </Container>
