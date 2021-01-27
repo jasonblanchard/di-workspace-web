@@ -39,7 +39,7 @@ export default function SearchExperience({ entries, onClickMore }: SearchExperie
                 placeholder="search"
             />
             {results.map((entry: Entry) => <div key={entry.id}><SearchPreview query={queryField.input.value} text={entry.text} id={entry.id} /></div>)}
-            <button onClick={onClickMore}>search more</button>
+            <button onClick={onClickMore}>keep searching</button>
         </Container>
     )
 }
