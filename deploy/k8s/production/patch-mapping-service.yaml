@@ -11,3 +11,10 @@ metadata:
   name: insights
 spec:
   service: workspace-web-production:8080
+---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: search
+spec:
+  service: workspace-web-production:8080
