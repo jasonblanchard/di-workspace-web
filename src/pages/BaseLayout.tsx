@@ -10,6 +10,9 @@ const Container = styled.div`
 
 const Header = styled.header`
   padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `
 
 const StyledLink = styled(Link)`
@@ -26,6 +29,7 @@ const BaseLayout: FunctionComponent = ({ children }) => {
           <h1>
             <StyledLink to="/workspace/">Di</StyledLink>
           </h1>
+          <Link to="/search">search</Link>
         </Header>
         {children}
       </Container>

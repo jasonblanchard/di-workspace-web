@@ -13,6 +13,7 @@ import InsightsPage from './pages/InsightsPage';
 import EntryEditorExperienceConnector from './experiences/EntryEditorExperienceConnector';
 import EntryListExperienceConnector from './experiences/EntryListExperienceConnector';
 import VelocityOverviewExperienceConnector from './experiences/VelocityOverviewExperienceConnector';
+import SearchPage from './search/SearchPage';
 
 const WorkspacePageConnectors = {
   EntryListExperienceConnector,
@@ -40,6 +41,9 @@ export default function App() {
           </Route>
           <Route path="/insights" exact>
             <InsightsPage connectors={InsightsPageConnectors} />
+          </Route>
+          <Route path="/search" exact>
+            <SearchPage />
           </Route>
         </Switch>
       </Router>
