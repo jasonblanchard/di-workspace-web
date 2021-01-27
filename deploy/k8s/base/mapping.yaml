@@ -13,3 +13,11 @@ metadata:
 spec:
   prefix: /insights/
   rewrite: '/'
+---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: search
+spec:
+  prefix: /search/
+  rewrite: '/'
