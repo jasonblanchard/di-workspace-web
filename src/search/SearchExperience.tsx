@@ -16,9 +16,10 @@ interface Entry {
 interface SearchExperienceProps {
     entries?: Entry[]
     onClickMore: () => void
+    showSearchMoreButton: boolean
 }
 
-export default function SearchExperience({ entries, onClickMore }: SearchExperienceProps) {
+export default function SearchExperience({ entries, onClickMore, showSearchMoreButton }: SearchExperienceProps) {
     const { form } = useForm({
         onSubmit: () => {}
     });
@@ -39,7 +40,7 @@ export default function SearchExperience({ entries, onClickMore }: SearchExperie
                 placeholder="search"
             />
             {results.map((entry: Entry) => <div key={entry.id}><SearchPreview query={queryField.input.value} text={entry.text} id={entry.id} /></div>)}
-            <button onClick={onClickMore}>keep searching</button>
+            {showSearchMoreButton && <button onClick={onClickMore}>keep searching</button>}
         </Container>
     )
 }

@@ -14,6 +14,7 @@ interface Entry {
 
 interface SearchExperienceConnectorRenderProps {
     entries: Entry[]
+    hasNextPage: boolean
     onClickMore: () => void
 }
 
@@ -80,6 +81,7 @@ export default function SearchExperienceConnector({ children }: SearchExperience
 
     return children({
         entries: entries,
-        onClickMore
+        onClickMore,
+        hasNextPage,
     })
 }

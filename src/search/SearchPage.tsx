@@ -8,8 +8,8 @@ export default function SearchPage() {
     return (
         <BaseLayout>
             <SearchExperienceConnector>
-                {({ entries, onClickMore }) => (
-                    <SearchExperience entries={entries} onClickMore={onClickMore} />
+                {({ entries, onClickMore, hasNextPage }) => (
+                    <SearchExperience entries={entries} onClickMore={onClickMore} showSearchMoreButton={hasNextPage} />
                 )}
             </SearchExperienceConnector>
         </BaseLayout>
