@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled';
 import { useForm, useField } from 'react-final-form-hooks'
 import { useQueryParam, StringParam } from 'use-query-params';
+import { useHotkeys } from "react-hotkeys-hook";
 
 import SearchPreview from './SearchPreview';
 
@@ -23,7 +24,6 @@ interface SearchExperienceProps {
 export default function SearchExperience({ entries, onClickMore, showSearchMoreButton }: SearchExperienceProps) {
     const [queryParam, setQueryParam] = useQueryParam('q', StringParam);
 
-    // TODO: Escape key to clear form
     const { form } = useForm({
         onSubmit: () => {},
         initialValues: {
@@ -43,6 +43,13 @@ export default function SearchExperience({ entries, onClickMore, showSearchMoreB
         if (textInput.current != null) {
             textInput.current.focus();
         }
+    }, [textInput])
+
+    useHotkeys('esc', () => {
+        form.reset({
+            query: "",
+        })
+        setQueryParam("")
     }, [textInput])
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {

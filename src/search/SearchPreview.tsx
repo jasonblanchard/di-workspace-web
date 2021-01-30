@@ -30,12 +30,12 @@ export default function({ query, text, id }: SearchPreviewProps) {
         if (index % 2 == 0) {
             return [
                 ...memo,
-                (<span key={string}>{string}</span>)
+                (<span key={index}>{string}</span>)
             ]
         } else {
             return [
                 ...memo,
-                (<Highlight key={string}>{string}</Highlight>)
+                (<Highlight key={index}>{string}</Highlight>)
             ];
         }
     }, [])
