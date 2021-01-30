@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { useHistory } from "react-router-dom";
+import { useHotkeys } from "react-hotkeys-hook";
 
 import BaseLayout from './BaseLayout';
 import EntryListExperience from '../experiences/EntryListExperience';
@@ -16,6 +18,11 @@ const ListContainer = styled.div`
 `;
 
 export default function WorkspacePage({ connectors }: WorkspacePageProps) {
+  const history = useHistory();
+  useHotkeys('command+shift+f', () => {
+    history.push("/search/")
+  })
+
   return (
     <BaseLayout>
       <connectors.EntryListExperienceConnector>

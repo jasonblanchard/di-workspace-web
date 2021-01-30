@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled';
 import { useForm, useField } from 'react-final-form-hooks'
 
@@ -23,6 +23,8 @@ export default function SearchExperience({ entries, onClickMore, showSearchMoreB
     const { form } = useForm({
         onSubmit: () => {}
     });
+    const textInput = useRef<HTMLInputElement>(null);
+
 
     const queryField = useField('query', form);
 
@@ -31,6 +33,12 @@ export default function SearchExperience({ entries, onClickMore, showSearchMoreB
         results = entries.filter((entry: Entry) => entry.text.toLocaleLowerCase().includes(queryField.input.value.toLocaleLowerCase()))
     }
 
+    useEffect(() => {
+        if (textInput.current != null) {
+            textInput.current.focus();
+        }
+    }, [textInput])
+
     return (
         <Container>
             <input
@@ -38,6 +46,7 @@ export default function SearchExperience({ entries, onClickMore, showSearchMoreB
                 value={queryField.input.value}
                 onChange={queryField.input.onChange}
                 placeholder="search"
+                ref={textInput}
             />
             {results.map((entry: Entry) => <div key={entry.id}><SearchPreview query={queryField.input.value} text={entry.text} id={entry.id} /></div>)}
             {showSearchMoreButton && <button onClick={onClickMore}>keep searching</button>}
