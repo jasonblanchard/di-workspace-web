@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import styled from '@emotion/styled';
 import { useForm, useField } from 'react-final-form-hooks'
+import { useQueryParam, StringParam } from 'use-query-params';
 
 import SearchPreview from './SearchPreview';
 
@@ -20,11 +21,16 @@ interface SearchExperienceProps {
 }
 
 export default function SearchExperience({ entries, onClickMore, showSearchMoreButton }: SearchExperienceProps) {
+    const [queryParam, setQueryParam] = useQueryParam('q', StringParam);
+
+    // TODO: Escape key to clear form
     const { form } = useForm({
-        onSubmit: () => {}
+        onSubmit: () => {},
+        initialValues: {
+            query: queryParam,
+        }
     });
     const textInput = useRef<HTMLInputElement>(null);
-
 
     const queryField = useField('query', form);
 
@@ -39,12 +45,17 @@ export default function SearchExperience({ entries, onClickMore, showSearchMoreB
         }
     }, [textInput])
 
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setQueryParam(event.target.value)
+        queryField.input.onChange(event)
+    }
+
     return (
         <Container>
             <input
                 name={queryField.input.name}
                 value={queryField.input.value}
-                onChange={queryField.input.onChange}
+                onChange={handleChange}
                 placeholder="search"
                 ref={textInput}
             />

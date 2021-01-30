@@ -5,6 +5,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import { QueryParamProvider } from 'use-query-params';
 
 import themes from './themes'
 import EntryEditorPage from './pages/EntryEditorPage';
@@ -32,20 +33,22 @@ export default function App() {
   return (
     <ThemeProvider theme={themes.light}>
       <Router>
-        <Switch>
-          <Route path="/workspace" exact>
-            <WorkspacePage connectors={WorkspacePageConnectors} />
-          </Route>
-          <Route path="/workspace/:entryId" exact>
-            <EntryEditorPage connectors={EntryEditorPageConnectors} />
-          </Route>
-          <Route path="/insights" exact>
-            <InsightsPage connectors={InsightsPageConnectors} />
-          </Route>
-          <Route path="/search" exact>
-            <SearchPage />
-          </Route>
-        </Switch>
+        <QueryParamProvider ReactRouterRoute={Route}>
+          <Switch>
+            <Route path="/workspace" exact>
+              <WorkspacePage connectors={WorkspacePageConnectors} />
+            </Route>
+            <Route path="/workspace/:entryId" exact>
+              <EntryEditorPage connectors={EntryEditorPageConnectors} />
+            </Route>
+            <Route path="/insights" exact>
+              <InsightsPage connectors={InsightsPageConnectors} />
+            </Route>
+            <Route path="/search" exact>
+              <SearchPage />
+            </Route>
+          </Switch>
+        </QueryParamProvider>
       </Router>
     </ThemeProvider>
   );
