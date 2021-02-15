@@ -95,7 +95,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
 
   // Only create the debounced save on first render.
   useEffect(() => {
-    const debouncedSaveEntry = debounce(saveEntry, 1000, { maxWait: 5000 });
+    const debouncedSaveEntry = debounce(saveEntry, 1000, { maxWait: 10000 });
     // Need to use function syntax, otherwise the setter tries to immediately invoke it.
     setDebouncedSaveEntry(() => debouncedSaveEntry);
   }, [selectedEntryId]);
