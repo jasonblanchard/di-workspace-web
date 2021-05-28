@@ -6,6 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import { QueryParamProvider } from 'use-query-params';
+import { RecoilRoot } from 'recoil';
 
 import themes from './themes'
 import EntryEditorPage from './pages/EntryEditorPage';
@@ -15,6 +16,7 @@ import EntryEditorExperienceConnector from './experiences/EntryEditorExperienceC
 import EntryListExperienceConnector from './experiences/EntryListExperienceConnector';
 import VelocityOverviewExperienceConnector from './experiences/VelocityOverviewExperienceConnector';
 import SearchPage from './search/SearchPage';
+import Toast from './toast';
 
 const WorkspacePageConnectors = {
   EntryListExperienceConnector,
@@ -32,24 +34,27 @@ const InsightsPageConnectors = {
 export default function App() {
   return (
     <ThemeProvider theme={themes.light}>
-      <Router>
-        <QueryParamProvider ReactRouterRoute={Route}>
-          <Switch>
-            <Route path="/workspace" exact>
-              <WorkspacePage connectors={WorkspacePageConnectors} />
-            </Route>
-            <Route path="/workspace/:entryId" exact>
-              <EntryEditorPage connectors={EntryEditorPageConnectors} />
-            </Route>
-            <Route path="/insights" exact>
-              <InsightsPage connectors={InsightsPageConnectors} />
-            </Route>
-            <Route path="/search" exact>
-              <SearchPage />
-            </Route>
-          </Switch>
-        </QueryParamProvider>
-      </Router>
+      <RecoilRoot>
+        <Toast />
+        <Router>
+          <QueryParamProvider ReactRouterRoute={Route}>
+            <Switch>
+              <Route path="/workspace" exact>
+                <WorkspacePage connectors={WorkspacePageConnectors} />
+              </Route>
+              <Route path="/workspace/:entryId" exact>
+                <EntryEditorPage connectors={EntryEditorPageConnectors} />
+              </Route>
+              <Route path="/insights" exact>
+                <InsightsPage connectors={InsightsPageConnectors} />
+              </Route>
+              <Route path="/search" exact>
+                <SearchPage />
+              </Route>
+            </Switch>
+          </QueryParamProvider>
+        </Router>
+      </RecoilRoot>
     </ThemeProvider>
   );
 }

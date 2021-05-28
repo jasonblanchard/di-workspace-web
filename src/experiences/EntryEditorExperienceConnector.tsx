@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 import debounce from 'lodash.debounce';
 import { NotebookClient } from "@jasonblanchard/di-apis"
+import { useRecoilState} from 'recoil';
 
 import { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
 import getCsrfToken from '../utils/getCsrfToken';
+import toastState from '../toast/atom';
+import DeleteEntryModal from '../components/DeleteEntryModal';
 
 interface EntryEditorExperienceConnectorProps {
   children: (arg0: EntryEditorExperienceConnectorRenderProps) => React.ReactElement;
@@ -54,6 +57,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
   const [isSavingEntry, setIsSavingEntry] = useState(false);
   const [didSaveEntryFail, setDidSaveEntryFiled] = useState(false);
   const [debouncedSaveEntry, setDebouncedSaveEntry] = useState<(({ text }: { text: string; }) => Promise<void>)>();
+  const [_, setToastText] = useRecoilState(toastState) 
 
   const history = useHistory();
 
@@ -102,6 +106,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
 
   async function deleteEntry() {
     await notebookClient.Notebook_DeleteEntry({ id: selectedEntryId || "" })
+    setToastText({ body: <DeleteEntryModal id={selectedEntryId} /> })
     history.push(`/workspace/`);
   }
 

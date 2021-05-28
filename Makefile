@@ -29,3 +29,9 @@ swap:
 
 mockserver:
 	prism mock -d https://raw.githubusercontent.com/jasonblanchard/di-apis/main/gen/pb-go/notebook.swagger.json
+
+runwithproxy:
+	PROXY_REWRITE=true PROXY_TARGET=http://localhost:4010 npm run serve
+
+# runwithprod:
+# 	PROXY_TARGET=https://di2.blanktech.net PROXY_API_TOKEN=<sekret> npm run serve

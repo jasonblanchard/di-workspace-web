@@ -11,6 +11,7 @@ export interface Theme {
         colors: {
             primary: string
             secondary: string
+            success: string
         }
     } 
 }
@@ -27,7 +28,8 @@ export const light = {
         },
         colors: {
             primary: '#333333',
-            secondary: '#8e8e8e'
+            secondary: '#8e8e8e',
+            success: '#75b975',
         }
     }
 }
