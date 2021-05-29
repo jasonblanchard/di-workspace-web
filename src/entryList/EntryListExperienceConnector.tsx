@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { NotebookClient, v2ListEntriesResponse } from "@jasonblanchard/di-apis"
 
-import entryPreview from '../utils/entryPreview';
+import entryPreview from './entryPreview';
 import getCsrfToken from '../utils/getCsrfToken';
 
 interface EntryPreview {
