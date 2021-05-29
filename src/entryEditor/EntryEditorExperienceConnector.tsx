@@ -106,7 +106,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
 
   async function undeleteEntry() {
     const id = selectedEntryId || "";
-    // await notebookClient.Notebook_UndeleteEntry({ id });
+    await notebookClient.Notebook_UndeleteEntry({ id });
     history.push(`/workspace/${id}`);
     setToastText({
       body: <div>Restored post</div>
@@ -114,7 +114,7 @@ export default function EntryEditorExperienceConnector({ children, selectedEntry
   }
 
   async function deleteEntry() {
-    // await notebookClient.Notebook_DeleteEntry({ id: selectedEntryId || "" })
+    await notebookClient.Notebook_DeleteEntry({ id: selectedEntryId || "" })
     setToastText({ body: <DeleteEntryModal id={selectedEntryId} onClickUndo={undeleteEntry} /> })
     history.push(`/workspace/`);
   }
