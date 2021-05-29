@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { getIfUtils, removeEmpty } = require('webpack-config-utils');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
-// const CopyPlugin = require('copy-webpack-plugin');
 
 const outputDir = path.join(__dirname, 'build/');
 const env = process.env.NODE_ENV || 'development';
@@ -46,13 +45,6 @@ module.exports = {
       output: 'manifest.json',
       writeToDisk: true,
     }),
-    // new CopyPlugin({
-    //   patterns: [
-    //     {
-    //       from: 'src/public', // Omit `to` so that it ends up in root of build/
-    //     },
-    //   ]
-    // }),
   ]),
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
