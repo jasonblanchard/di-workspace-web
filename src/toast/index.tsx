@@ -18,8 +18,6 @@ export default function Toast() {
         setToastText(null);
     }
 
-    console.log(toast);
-
     if (!toast) return null;
 
     return (
