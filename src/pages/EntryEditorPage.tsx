@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 
 import SideDrawerLayout from './SideDrawerLayout';
-import EntryEditorExperience from '../experiences/EntryEditorExperience';
-import EntryListExperience from '../experiences/EntryListExperience';
-import { EntryListExperienceConnector, EntryEditorExperienceConnector } from '../experiences/connectors';
+import EntryEditorExperience from '../entryEditor/EntryEditorExperience';
+import EntryListExperience from '../entryList/EntryListExperience';
+import { EntryListExperienceConnector, EntryEditorExperienceConnector } from '../connectors';
 import useLocalStorage from '../utils/useLocalStorage'
 
 interface EntryPatch {

@@ -12,9 +12,9 @@ import EntryEditorPage from './pages/EntryEditorPage';
 import WorkspacePage from './pages/WorkspacePage';
 import InsightsPage from './pages/InsightsPage';
 import SearchPage from './search/SearchPage';
-import EntryEditorExperienceConnector from './experiences/EntryEditorExperienceConnector';
-import EntryListExperienceConnector from './experiences/EntryListExperienceConnector';
-import VelocityOverviewExperienceConnector from './experiences/VelocityOverviewExperienceConnector';
+import EntryEditorExperienceConnector from './entryEditor/EntryEditorExperienceConnector';
+import EntryListExperienceConnector from './entryList/EntryListExperienceConnector';
+import VelocityOverviewExperienceConnector from './velocityOverview/VelocityOverviewExperienceConnector';
 import toastState from './toast/atom';
 
 const WorkspacePageConnectors = {

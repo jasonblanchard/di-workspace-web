@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { VelocityOverviewExperienceConnector } from '../experiences/connectors';
+import { VelocityOverviewExperienceConnector } from '../connectors';
 import BaseLayout from './BaseLayout';
-import VelocityOverviewExperience from '../experiences/VelocityOverviewExperience';
+import VelocityOverviewExperience from '../velocityOverview/VelocityOverviewExperience';
 
 interface InsightsPageProps {
   connectors: {

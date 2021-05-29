@@ -4,8 +4,8 @@ import { useHistory } from "react-router-dom";
 import { useHotkeys } from "react-hotkeys-hook";
 
 import BaseLayout from './BaseLayout';
-import EntryListExperience from '../experiences/EntryListExperience';
-import { EntryListExperienceConnector } from '../experiences/connectors';
+import EntryListExperience from '../entryList/EntryListExperience';
+import { EntryListExperienceConnector } from '../connectors';
 
 interface WorkspacePageProps {
   connectors: {

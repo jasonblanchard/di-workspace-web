@@ -3,7 +3,7 @@ import React from 'react';
 import EntryEditorPage from './EntryEditorPage';
 import { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
 import noop from '../utils/noop';
-import { EntryListExperienceConnector, EntryEditorExperienceConnector } from '../experiences/connectors';
+import { EntryListExperienceConnector, EntryEditorExperienceConnector } from '../connectors';
 
 export default { title: 'EntryEditorPage' };
 

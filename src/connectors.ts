@@ -1,8 +1,8 @@
 import react from 'react';
 
-import EntryListExperienceConnector from './EntryListExperienceConnector';
-import EntryEditorExperienceConnector from '../experiences/EntryEditorExperienceConnector';
-import VelocityOverviewExperienceConnector from '../experiences/VelocityOverviewExperienceConnector';
+import EntryListExperienceConnector from './entryList/EntryListExperienceConnector';
+import EntryEditorExperienceConnector from './entryEditor/EntryEditorExperienceConnector';
+import VelocityOverviewExperienceConnector from './velocityOverview/VelocityOverviewExperienceConnector';
 
 export type EntryListExperienceConnector = (arg0: React.ComponentProps<typeof EntryListExperienceConnector>) => React.ReactElement;
 export type EntryEditorExperienceConnector = (arg0: React.ComponentProps<typeof EntryEditorExperienceConnector>) => React.ReactElement;

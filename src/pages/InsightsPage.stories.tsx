@@ -1,7 +1,7 @@
 import React from 'react';
 
 import InsightsPage from './InsightsPage';
-import { VelocityOverviewExperienceConnector } from '../experiences/connectors';
+import { VelocityOverviewExperienceConnector } from '../connectors';
 
 export default { title: 'InsightsPage' };
 
