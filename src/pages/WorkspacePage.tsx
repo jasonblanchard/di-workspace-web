@@ -5,19 +5,13 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 import BaseLayout from './BaseLayout';
 import EntryListExperience from '../entryList/EntryListExperience';
-import { EntryListExperienceConnector } from '../connectors';
-
-interface WorkspacePageProps {
-  connectors: {
-    EntryListExperienceConnector: EntryListExperienceConnector;
-  }
-}
+import EntryListExperienceConnector from '../entryList/EntryListExperienceConnector';
 
 const ListContainer = styled.div`
   padding: 10px;
 `;
 
-export default function WorkspacePage({ connectors }: WorkspacePageProps) {
+export default function WorkspacePage() {
   const history = useHistory();
   useHotkeys('command+shift+f', () => {
     history.push("/search/")
@@ -25,11 +19,11 @@ export default function WorkspacePage({ connectors }: WorkspacePageProps) {
 
   return (
     <BaseLayout>
-      <connectors.EntryListExperienceConnector>
+      <EntryListExperienceConnector>
         {({ isEntriesLoading, ...rest }) => {
           return isEntriesLoading ? <div>loading...</div> : <ListContainer><EntryListExperience {...rest} /></ListContainer>;
         }}
-      </connectors.EntryListExperienceConnector>
+      </EntryListExperienceConnector>
     </BaseLayout>
   )
 }
