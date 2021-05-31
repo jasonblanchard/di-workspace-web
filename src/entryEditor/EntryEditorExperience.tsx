@@ -40,6 +40,8 @@ const EntryContainerPanel = styled.div`
     flex-grow: 1;
     flex-basis: 0;
     padding: 0 20px;
+    overflow: scroll;
+    height: 100vh;
 `;
 
 function formatDate(locale: string, dateTime?: string, ) {
