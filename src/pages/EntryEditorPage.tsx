@@ -27,7 +27,7 @@ export default function EntryEditorPage() {
   const { entryId } = useParams<Params>();
   const [entryPatches, setEntryPatches] = useState<EntryPatch>();
 
-  const handleToggleCollapse = () => setIsSidebarCollapsed((isSidebarCollapsed: boolean) => !isSidebarCollapsed);
+  const handleToggleCollapse = () => setIsSidebarCollapsed(isSidebarCollapsed => !isSidebarCollapsed);
 
   useHotkeys('command+\\', handleToggleCollapse, [isSidebarCollapsed])
   useHotkeys('command+shift+f', () => {
@@ -68,8 +68,9 @@ export default function EntryEditorPage() {
       </EntryListExperienceConnector>
       <div role="main">
         <EntryEditorExperienceConnector selectedEntryId={entryId} onChangeEntry={handleChangeEntry}>
-          {({ isLoadingEntry, ...rest }) => {
-            return isLoadingEntry ? <div>loading...</div> : <EntryEditorExperience {...rest} />
+          {({ isLoadingEntry, entryFormInitialValues, ...rest }) => {
+            const preview = entryPatches?.[entryId]?.text || entryFormInitialValues?.text || "";
+            return isLoadingEntry ? <div>loading...</div> : <EntryEditorExperience preview={preview} entryFormInitialValues={entryFormInitialValues} {...rest} />
           }}
         </EntryEditorExperienceConnector>
       </div>

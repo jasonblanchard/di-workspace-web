@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { useHotkeys } from "react-hotkeys-hook";
+import ReactMarkdown from 'react-markdown';
+import useLocalStorage from '../utils/useLocalStorage';
 
 import EntryForm from '../components/EntryForm';
 import SaveStatusIndicator, { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
@@ -16,6 +19,7 @@ interface EntryEditorExperienceProps {
   entryCreatedAt: string;
   entryUpdatedAt?: string;
   onClickConfirmDeleteEntry: () => void;
+  preview: string;
 }
 
 const MetadataContainer = styled.div`
@@ -28,6 +32,16 @@ const TimestampContainer = styled.div`
   color: ${props => props.theme.typography.colors.secondary};
 `;
 
+const EntryContainer = styled.div`
+  display: flex;
+`;
+
+const EntryContainerPanel = styled.div`
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 0 20px;
+`;
+
 function formatDate(locale: string, dateTime?: string, ) {
   if (!dateTime) return '';
   const date = new Date(dateTime)
@@ -38,8 +52,27 @@ function formatDate(locale: string, dateTime?: string, ) {
   return dateFormat.format(date)
 }
 
+interface MarkdownPreivewProps {
+  preview: string
+}
 
-export default function EntryEditorExperience({ entryFormInitialValues, isEntryFormDisabled, saveStatusIndicatorVariant, onSubmitEntryForm, onChangeEntryForm, onClickConfirmDeleteEntry, entryCreatedAt, entryUpdatedAt }: EntryEditorExperienceProps) {
+function MarkdownPreview({ preview }: MarkdownPreivewProps) {
+  return (
+    <EntryContainerPanel>
+      <ReactMarkdown>{preview}</ReactMarkdown>
+    </EntryContainerPanel>
+  );
+}
+
+export default function EntryEditorExperience({ entryFormInitialValues, isEntryFormDisabled, saveStatusIndicatorVariant, onSubmitEntryForm, onChangeEntryForm, onClickConfirmDeleteEntry, entryCreatedAt, entryUpdatedAt, preview }: EntryEditorExperienceProps) {
+  const [showPreview, setShowPreview] = useLocalStorage<boolean>('EntryEditorExperience:showPreview', true);
+
+  function handleToggleShowPreview() {
+    setShowPreview(showPreview => !showPreview);
+  }
+
+  useHotkeys('command+shift+p', handleToggleShowPreview, [showPreview])
+  
   return (
     <>
       <MetadataContainer>
@@ -50,13 +83,19 @@ export default function EntryEditorExperience({ entryFormInitialValues, isEntryF
           {formatDate('en-US', entryCreatedAt)} {entryUpdatedAt ? `• ${formatDate('en-US', entryUpdatedAt)}` : null}
         </TimestampContainer>
       </MetadataContainer>
-      <EntryForm
-        initialValues={entryFormInitialValues}
-        onSubmit={onSubmitEntryForm}
-        isDisabled={isEntryFormDisabled}
-        onChange={onChangeEntryForm}
-        actions={<DeleteEntry onConfirmDelete={onClickConfirmDeleteEntry} />}
-      />
+      <EntryContainer>
+        <EntryContainerPanel>
+          <EntryForm
+            initialValues={entryFormInitialValues}
+            onSubmit={onSubmitEntryForm}
+            isDisabled={isEntryFormDisabled}
+            onChange={onChangeEntryForm}
+            actions={<DeleteEntry onConfirmDelete={onClickConfirmDeleteEntry} />}
+          />
+        </EntryContainerPanel>
+        {showPreview ? <MarkdownPreview preview={preview} /> : null}
+      </EntryContainer>
+      <button onClick={handleToggleShowPreview}>show preview</button>
     </>
   );
 }

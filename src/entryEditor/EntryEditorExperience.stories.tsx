@@ -20,6 +20,7 @@ function handleClickDeleteEntry() {
 export const base = () => {
   return (
     <EntryEditorExperience
+      preview="asdfa"
       isEntryFormDisabled={false}
       saveStatusIndicatorVariant={SaveStatusIndicatorVariant.Saved}
       onSubmitEntryForm={saveEntry}
@@ -33,6 +34,7 @@ export const base = () => {
 export const withUpdatedAt = () => {
   return (
     <EntryEditorExperience
+      preview="asdf"
       isEntryFormDisabled={false}
       saveStatusIndicatorVariant={SaveStatusIndicatorVariant.Saved}
       onSubmitEntryForm={saveEntry}
