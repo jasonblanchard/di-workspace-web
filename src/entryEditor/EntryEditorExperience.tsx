@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { useHotkeys } from "react-hotkeys-hook";
 import ReactMarkdown from 'react-markdown';
 import useLocalStorage from '../utils/useLocalStorage';
+import gfm from 'remark-gfm'
 
 import EntryForm from '../components/EntryForm';
 import SaveStatusIndicator, { Variant as SaveStatusIndicatorVariant } from '../components/SaveStatusIndicator';
@@ -61,19 +62,49 @@ interface MarkdownPreivewProps {
 function MarkdownPreview({ preview }: MarkdownPreivewProps) {
   return (
     <EntryContainerPanel>
-      <ReactMarkdown>{preview}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[gfm]}>{preview}</ReactMarkdown>
     </EntryContainerPanel>
   );
 }
 
+interface FormProps {
+  entryFormInitialValues ?: {
+    text: string;
+  },
+  onSubmitEntryForm: (arg0: { text: string }) => void;
+  isEntryFormDisabled: boolean;
+  onChangeEntryForm: (field: string, value: string) => void;
+  onClickConfirmDeleteEntry: () => void;
+}
+
+function Form(props: FormProps) {
+  return (
+    <EntryContainerPanel>
+      <EntryForm
+        initialValues={props.entryFormInitialValues}
+        onSubmit={props.onSubmitEntryForm}
+        isDisabled={props.isEntryFormDisabled}
+        onChange={props.onChangeEntryForm}
+        actions={<DeleteEntry onConfirmDelete={props.onClickConfirmDeleteEntry} />}
+      />
+    </EntryContainerPanel>
+  )
+}
+
 export default function EntryEditorExperience({ entryFormInitialValues, isEntryFormDisabled, saveStatusIndicatorVariant, onSubmitEntryForm, onChangeEntryForm, onClickConfirmDeleteEntry, entryCreatedAt, entryUpdatedAt, preview }: EntryEditorExperienceProps) {
   const [showPreview, setShowPreview] = useLocalStorage<boolean>('EntryEditorExperience:showPreview', true);
+  const [showForm, setShowForm] = useLocalStorage<boolean>('EntryEditorExperience:showForm', true);
 
   function handleToggleShowPreview() {
     setShowPreview(showPreview => !showPreview);
   }
 
+  function handleToggleShowForm() {
+    setShowForm(showForm => !showForm);
+  }
+
   useHotkeys('command+shift+p', handleToggleShowPreview, [showPreview])
+  useHotkeys('command+shift+e', handleToggleShowForm, [showForm])
   
   return (
     <>
@@ -86,18 +117,18 @@ export default function EntryEditorExperience({ entryFormInitialValues, isEntryF
         </TimestampContainer>
       </MetadataContainer>
       <EntryContainer>
-        <EntryContainerPanel>
-          <EntryForm
-            initialValues={entryFormInitialValues}
-            onSubmit={onSubmitEntryForm}
-            isDisabled={isEntryFormDisabled}
-            onChange={onChangeEntryForm}
-            actions={<DeleteEntry onConfirmDelete={onClickConfirmDeleteEntry} />}
-          />
-        </EntryContainerPanel>
+        {showForm ? <Form
+          entryFormInitialValues={entryFormInitialValues}
+          onSubmitEntryForm={onSubmitEntryForm}
+          isEntryFormDisabled={isEntryFormDisabled}
+          onChangeEntryForm={onChangeEntryForm}
+          onClickConfirmDeleteEntry={onClickConfirmDeleteEntry}
+          /> 
+          : null}
         {showPreview ? <MarkdownPreview preview={preview} /> : null}
       </EntryContainer>
       <button onClick={handleToggleShowPreview}>show preview</button>
+      <button onClick={handleToggleShowForm}>show form</button>
     </>
   );
 }
